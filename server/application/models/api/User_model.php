@@ -75,8 +75,6 @@ class User_model extends CI_Model
 
         $ret = $this->db->update('user');
 
-        //echo $ret;
-
         if (!$ret)
             return -1;
 

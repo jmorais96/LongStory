@@ -37,7 +37,7 @@ class User extends REST_Controller {
 
     }
 
-    public function getUser_get($id=0)
+    public function getUser_get()
     {
         $id = $this->get('id');
 

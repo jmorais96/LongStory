@@ -37,6 +37,18 @@ class Book extends REST_Controller {
 
     }
 
+    public function getBook_get()
+    {
+        $id = $this->get('id');
+
+        if ($id===NULL)
+            $user= $this->book_model->getBooks();
+        else
+            $user= $this->book_model->getBooks($id);
+
+        $this->response($user, REST_Controller::HTTP_OK);
+    }
+
     function addBook_post()
     {
         $book = array(

@@ -37,9 +37,9 @@ class User extends REST_Controller {
 
     }
 
-    public function getUser_get()
+    public function getUser_get($id=0)
     {
-        $id= $this->get('id');
+        $id = $this->get('id');
 
         if ($id===NULL)
             $user= $this->user_model->getUsers();
@@ -84,10 +84,10 @@ class User extends REST_Controller {
         }
         else
         {
-            $message = [
-                'id' => $ret,
-                'message' => 'utilizador criado',
-            ];
+            //$user = $this->getUser_get($ret);
+            //print_r($ret);exit;
+            //$message = $this->getUser_get($ret);
+            $message=$this->user_model->getUsers($ret);
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 

@@ -55,7 +55,7 @@ class User extends REST_Controller {
             'name' =>$this->post('name'),
             'email' =>$this->post('email'),
             'pass' =>$this->post('pass'),
-            'birthDate' =>$this->post('birth'),
+            'birthDate' =>$this->post('birthDate'),
         );
         $user['idProfile']=2;
 

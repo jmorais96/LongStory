@@ -59,6 +59,42 @@ class User_model extends CI_Model
         return $user_id;
     }
 
+    function editUser($user)
+    {
+        if ($user['name']!='')
+        {
+            $this->db->set('name', $user['name']);
+        }
+
+        if ($user['pass']!='')
+        {
+            $this->db->set('pass', $user['pass']);
+        }
+
+        if ($user['birthDate']!='')
+        {
+            $this->db->set('birthDate', $user['birthDate']);
+        }
+
+        if ($user['idProfile']!='')
+        {
+            $this->db->set('idProfile', $user['idProfile']);
+        }
+
+        $this->db->where('idUser', $user['idUser']);
+
+
+        $ret = $this->db->update('user');
+
+        //echo $ret;
+
+        if (!$ret)
+            return -1;
+
+
+        return $this->getUsers($user['idUser']);
+    }
+
 
 
 }

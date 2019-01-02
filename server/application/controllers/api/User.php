@@ -94,4 +94,45 @@ class User extends REST_Controller {
         }
 
     }
+
+    function editUser_post()
+    {
+        $user = array(
+            'idUser' =>$this->post('idUser'),
+            'name' =>$this->post('name'),
+            'pass' =>$this->post('pass'),
+            'birthDate' =>$this->post('birth'),
+            'idProfile' =>$this->post('idProfile')
+        );
+
+        if ($user['idUser']=='')
+        {
+            $message = [
+                'id' => -1,
+                'message' => 'É necessario o id do utilizador que deseja editar'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+        $ret=$this->user_model->editUser($user);
+        if ($ret<0)
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'não foi passivel atualizar o utilizador na base de dados'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+        else
+        {
+
+            $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+        }
+
+    }
 }

@@ -89,6 +89,7 @@ class User extends REST_Controller {
             //$message = $this->getUser_get($ret);
             $message=$this->user_model->getUsers($ret);
 
+
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
         }

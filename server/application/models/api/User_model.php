@@ -44,17 +44,6 @@ class User_model extends CI_Model
             return -1;
 
         $user_id = $this->db->insert_id();
-        //print_r($genders_arr);
-        /*foreach ($genders_arr as $g) {
-            if ($g !=''){
-                $ret = $this->db->insert('gender_has_movie',
-                    array('movie_id' => $movie_id,
-                        'gender_id' => $g)
-                );
-                if (!$ret)
-                    return -2;
-            }
-        }*/
 
         return $user_id;
     }
@@ -95,6 +84,34 @@ class User_model extends CI_Model
         return $this->getUsers($user['idUser']);
     }
 
+    function addFriend($user)
+    {
+        $ret = $this->db->insert('friends', $user);
 
+        if (!$ret)
+            return -1;
+
+        return 1;
+    }
+
+    function getFriend($id)
+    {
+        $this->db->select("u.idUser, u.name", false);
+        $this->db->from("user as u");
+        $this->db->join("friends as f" , "u.idUser = f.idFriend");
+        $this->db->where('f.idUser', $id);
+
+        //echo $this->db->get();
+
+        $query=$this->db->get();
+
+
+        $users = array();
+        foreach ($query->result() as $t)
+            $users[] = (array) $t;
+
+        return $users;
+
+    }
 
 }

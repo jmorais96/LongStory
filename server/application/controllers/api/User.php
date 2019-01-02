@@ -57,7 +57,7 @@ class User extends REST_Controller {
             'pass' =>$this->post('pass'),
             'birthDate' =>$this->post('birth'),
         );
-        $user['idProfile']=1;
+        $user['idProfile']=2;
 
 
 
@@ -135,4 +135,56 @@ class User extends REST_Controller {
         }
 
     }
+
+    function addFriend_post()
+    {
+        $user = array(
+            'idUser' =>$this->post('idUser'),
+            'idFriend' =>$this->post('idFriend'),
+        );
+
+        if ($user['idUser'] == '' || $user['idFriend']== '')
+        {
+            $message = [
+                'id' => -1,
+                'message' => 'não foi passivel adicionar amigo'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+        $ret=$this->user_model->addFriend($user);
+        if ($ret<0)
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'não foi passivel adicionar amigo'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+        else
+        {
+            $message = [
+                'id' => 1,
+                'message' => 'Amigo adicionado',
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+        }
+
+    }
+
+    public function getFriends_get()
+    {
+        $id= $this->get('id');
+
+        $users= $this->user_model->getFriend($id);
+
+        $this->response($users, REST_Controller::HTTP_OK);
+    }
+
 }

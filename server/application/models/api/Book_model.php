@@ -21,6 +21,7 @@ class Book_model extends CI_Model
         $this->db->select("b.idBook, b.name, a.author, b.description, b.ISBN, b.image", false);
         $this->db->from("book as b");
         $this->db->join("author as a" , "b.idAuthor=a.idAuthor");
+        $this->db->where('b.idStatusBook', 1);
 
         if ($id != 0)
             $this->db->where('b.idBook', $id);
@@ -32,7 +33,7 @@ class Book_model extends CI_Model
             $books[] = (array) $t;
 
         return $books;
-        
+
     }
 
     function addBook($book)

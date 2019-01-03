@@ -29,7 +29,6 @@ class User extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-
 	var $api_url;
 
 	/**
@@ -47,21 +46,18 @@ class User extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('general/header');
+		$this->load->view('general/menu');
+		$this->load->view('general/footer');
+
 
 		//$this->getMovies();
 	}
 
 	///////////////////////////////////// CREATE USER ///////////////////////////////////
-	function addUser() //$post_data
+	function addUser($post_data)
 	{
 		//print_r($post_data); exit;
-		//$post_data['user_id'] ='1';
-		$post_data = array(
-			'name' => 'Alice',
-			'email' => 'alice@gg.com',
-			'pass' => '123456',
-			'birthDate' => '2018-12-06',
-		);
 		$con = curl_init();
 		curl_setopt($con, CURLOPT_URL, $this->api_url . '/adduser/');
 		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
@@ -70,7 +66,7 @@ class User extends CI_Controller {
 		$response=curl_exec($con);
 		if (!curl_errno($con)){
 			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)){
-				case 201: break;
+				case 200: break;
 				default: echo "Unexpected HTTP code: ", $http_code, "\n";
 					exit;
 			}
@@ -79,23 +75,204 @@ class User extends CI_Controller {
 		curl_close($con);
 
 		$data = array(
-			'movies' => json_decode($response, true)
+			'users' => json_decode($response, true)
 		);
 		//print_r($data); exit;
-		//$this->load->view('geral/header');
-		//$this->load->view('clientrest/movies', $data);
-	//	$this->load->view('geral/footer');
+		$this->load->view('general/header');
+		$this->load->view('long_story/users', $data);
+		$this->load->view('general/footer');
 	}
 
+	function addUserForm()
+	{
+		$this->load->view('general/menu');
+		$this->load->view('long_story/add_user');
+		$this->load->view('general/footer');
+	}
+
+	function addUserValidation()
+	{
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('pass', 'Pass', 'required');
+		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'name' => $this->input->post('name'),
+				'email' => $this->input->post('email'),
+				'pass' => $this->input->post('pass'),
+				'birthDate' => $this->input->post('birthDate'),
+			);
+
+		/*	if (isset($_FILES) && $_FILES['userfile']['error']==0){
+				$config['upload_path'] = 'upload/';
+				$config['allowed_types'] = '*';
+				$this->load->library('upload', $config);
+
+				if (! $this->upload->do_upload('userfile')){
+					$data= array(
+						'message' => $this->upload->display_errors()
+					);
+
+					$this->load->view('general/header');
+					echo $data['message'];
+					$this->load->view('general/footer');
+				}
+				else
+				{
+					$upload_data= $this->upload->data();
+					//print_r($upload_data); exit;
+					$post_data['userfile'] = base64_encode(
+						file_get_contents($upload_data['full_path'])
+					);
+				}
+			}
+			else
+			{
+				echo "deu erro a fazer upload";
+			}*/
+
+			//print_r($post_data); exit;
+			$this->addUser($post_data);
+		}
+		else
+		{
+			$this->addUserForm();
+		}
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/addUserForm
+	///////////////////////////////////// END CREATE USER ///////////////////////////////////
+
+	///////////////////////////////////// GET USER ///////////////////////////////////
+
+	function getUser($id = 0)
+	{
+
+		$con = curl_init();
+		if ($id == 0)
+			curl_setopt($con, CURLOPT_URL, $this->api_url.'/getuser/');
+		else
+			curl_setopt($con, CURLOPT_URL, $this->api_url.'/getuser/id/'. $id);
 
 
-/*$post_data = array(
-'name' => $this->input->post('name'),
-'email' => $this->input->post('email'),
-'pass' => $this->input->post('pass'),
-'birthDate' => $this->input->post('birthDate'),
-);*/
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response=curl_exec($con);
+		if (!curl_errno($con)){
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)){
+				case 200: break;
+				default: echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'users' => json_decode($response, true)
+		);
+		$this->load->view('general/menu');
+		$this->load->view('long_story/users', $data);
+		$this->load->view('general/footer');
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
+	///////////////////////////////////// END GET USER ///////////////////////////////////
+
+	///////////////////////////////////// EDIT USER ///////////////////////////////////
+	function editUser($post_data)
+	{
+		//$post_data = array ('start_date' => '2018-11-27 15:00:00', "execution_user_id"=>"2", 'id'=>$id);
+		//print_r( $post_data);
+
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url);
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($con, CURLOPT_POST, true);
+		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		$response = curl_exec($con);
+
+		if(!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE))
+			{
+				case 201 : break;
+				default : echo 'Unexpected HTTP code: ', $http_code, "\n";
+					exit;
+			}
+		}
+		curl_close($con);
+
+		$data = array('tasks' => array(json_decode($response, true)));
+		//print_r($data);
+		$this->load->view('general/menu');
+		$this->load->view('long_story/users', $data);
+		$this->load->view('general/footer');
+	}
+
+	function editUserForm()
+	{
+		$this->load->view('general/menu');
+		$this->load->view('long_story/edit_user');
+		$this->load->view('general/footer');
+	}
+
+	function editUserValidation()
+	{
+		$this->form_validation->set_rules('idUser', 'idUser', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('pass', 'Pass', 'required');
+		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'idUser' => $this->input->post('idUser'),
+				'name' => $this->input->post('name'),
+				'email' => $this->input->post('email'),
+				'pass' => $this->input->post('pass'),
+				'birthDate' => $this->input->post('birthDate'),
+			);
+
+			/*	if (isset($_FILES) && $_FILES['userfile']['error']==0){
+                    $config['upload_path'] = 'upload/';
+                    $config['allowed_types'] = '*';
+                    $this->load->library('upload', $config);
+
+                    if (! $this->upload->do_upload('userfile')){
+                        $data= array(
+                            'message' => $this->upload->display_errors()
+                        );
+
+                        $this->load->view('general/header');
+                        echo $data['message'];
+                        $this->load->view('general/footer');
+                    }
+                    else
+                    {
+                        $upload_data= $this->upload->data();
+                        //print_r($upload_data); exit;
+                        $post_data['userfile'] = base64_encode(
+                            file_get_contents($upload_data['full_path'])
+                        );
+                    }
+                }
+                else
+                {
+                    echo "deu erro a fazer upload";
+                }*/
+
+			//print_r($post_data); exit;
+			$this->editUser($post_data);
+		}
+		else
+		{
+			$this->editUserForm();
+		}
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/editUserForm
+	///////////////////////////////////// EDIT USER ///////////////////////////////////
+
+
 }
 
-
-//http://controlaltdelete.pt/uac/ws/index.php/api/taskmanager/tasks

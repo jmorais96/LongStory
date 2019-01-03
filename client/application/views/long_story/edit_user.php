@@ -1,16 +1,16 @@
 <div class="row">
-    <div class="col-lg-12">
-        <h2> New user's registration</h2>
-    </div>
+	<div class="col-lg-12">
+		<h2> Edit user</h2>
+	</div>
 </div>
 
-<?php echo form_open_multipart("User/addUserValidation", 'role="form" class="form-horizontal"')?>
+<?php echo form_open_multipart("User/editUserValidation", 'role="form" class="form-horizontal"')?>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <?php echo validation_errors(); ?>
-        </div>
-    </div>
+<div class="row">
+	<div class="col-lg-12">
+		<?php echo validation_errors(); ?>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-lg-12">
@@ -60,7 +60,7 @@
 	<div class="col-lg-12">
 		<p class="text-center">
 			<br>
-			<button type="submit" class="btn btn-green" style="width: 100%"> Add User</button>
+			<button type="submit" class="btn btn-primary"> Edit User</button>
 		</p>
 	</div>
 </div>

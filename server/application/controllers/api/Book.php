@@ -41,7 +41,7 @@ class Book extends REST_Controller {
 
     public function getBooks_get()
     {
-        if ($this->get('userId')=="")
+        if ($this->get('idUser')=="")
         {
             $message = [
                 'id' => -2,
@@ -54,7 +54,7 @@ class Book extends REST_Controller {
 
         }
 
-        if ($this->user_model->isAdmin($this->get('userId'))){
+        if ($this->user_model->isAdmin($this->get('idUser'))){
 
             $book= $this->book_model->getAllBooks();
 
@@ -108,6 +108,61 @@ class Book extends REST_Controller {
             $message = [
                 'id' => $ret,
                 'message' => 'Livro criado',
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+        }
+
+    }
+
+    public function getGenders_get()
+    {
+
+        $gender= $this->book_model->getGender();
+
+        $this->response($gender, REST_Controller::HTTP_OK);
+    }
+
+    function addMovie_post()
+    {
+        $movie = array(
+            'title' =>$this->post('title'),
+            'year' =>$this->post('year'),
+            'description' =>$this->post('description'),
+            'imdb_id' =>$this->post('imdb_id'),
+            'user_id' =>$this->post('user_id'),
+            'photo' => $this->post('userfile')
+        );
+
+        $genders = $this->post('gender_id');
+
+        if ($movie['title'] == '' || $movie['year']== '' || $movie['user_id']=="" || $genders=='')
+        {
+            $message = [
+                'id' => -1,
+                'message' => 'não foi passivel registar o filme na base de dados'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+        $ret=$this->movie_model->addMovie($movie, $genders);
+        if ($ret<0)
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'não foi passivel registar o filme na base de dados'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+        else
+        {
+            $message = [
+                'id' => 0,
+                'message' => 'Filme criado',
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);

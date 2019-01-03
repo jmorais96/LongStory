@@ -61,17 +61,27 @@ class User extends REST_Controller {
             'idProfile' =>$this->post('idProfile'),
         );
 
-        if ($this->post('myUserId')==""){
+        if ($this->post('myIdUser')==""){
 
             $message = [
-                'id' => -2,
+                'id' => -4,
                 'message' => 'necessita de madnar o id do utilizador'
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
 
-        }else if ($this->user_model->isAdmin($this->post('myUserId'))){
+        }else if ($this->user_model->isAdmin($this->post('myIdUser'))=="not found"){
+
+            $message = [
+                'id' => -3,
+                'message' => 'Utilizador não existe'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+
+        } else if (!$this->user_model->isAdmin($this->post('myIdUser'))){
 
             if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
             {
@@ -96,9 +106,7 @@ class User extends REST_Controller {
             }
             else
             {
-                //$user = $this->getUser_get($ret);
-                //print_r($ret);exit;
-                //$message = $this->getUser_get($ret);
+
                 $message=$this->user_model->getUsers($ret);
 
 

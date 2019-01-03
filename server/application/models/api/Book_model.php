@@ -90,6 +90,19 @@ class Book_model extends CI_Model
         return $authorId;
     }
 
+    function getGender()
+    {
+        $this->db->select("g.idGender, g.gender", false);
+        $this->db->from("gender as g");
 
+        $query=$this->db->get();
+
+
+        $genders = array();
+        foreach ($query->result() as $t)
+            $genders[] = (array) $t;
+
+        return $genders;
+    }
 
 }

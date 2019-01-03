@@ -21,7 +21,11 @@ class User_model extends CI_Model
         $user= $this->getUsers($id);
         //print_r($user);
 
-        if ($user[0]['idProfile'] == 1)
+
+        if (count($user)==0)
+            return "not found";
+
+        if ($user['idProfile'] == 1)
             return true;
 
         return false;

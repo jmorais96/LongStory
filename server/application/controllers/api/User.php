@@ -37,17 +37,7 @@ class User extends REST_Controller {
 
     }
 
-    public function isAdmin($id)
-    {
 
-        $user= $this->user_model->getUsers($id);
-
-
-        if ($user[0]['idProfile'] == 1)
-            return true;
-
-        return false;
-    }
 
     public function getUser_get()
     {
@@ -81,7 +71,7 @@ class User extends REST_Controller {
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
 
-        }else if ($this->isAdmin($this->post('myUserId'))){
+        }else if ($this->user_model->isAdmin($this->post('myUserId'))){
 
             if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
             {

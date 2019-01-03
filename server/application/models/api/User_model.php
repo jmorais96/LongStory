@@ -15,6 +15,18 @@ class User_model extends CI_Model
         parent::__construct();
     }
 
+    public function isAdmin($id)
+    {
+
+        $user= $this->getUsers($id);
+
+
+        if ($user[0]['idProfile'] == 1)
+            return true;
+
+        return false;
+    }
+
 
     function getUsers($id=0)
     {

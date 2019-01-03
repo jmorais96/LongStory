@@ -21,14 +21,13 @@ require APPPATH . 'libraries/Format.php';
  *
  * @package         CodeIgniter
  * @subpackage      Rest Server
- * @category        Controller
+ * @category        Controller0
  * @author          Phil Sturgeon, Chris Kacerguis
  * @license         MIT
  * @link            https://github.com/chriskacerguis/codeigniter-restserver
  */
 class Book extends REST_Controller {
 
-    private $userClient;
 
     function __construct()
     {
@@ -36,13 +35,13 @@ class Book extends REST_Controller {
         parent::__construct();
 
         $this->load->model('api/book_model');
-        $this->userClient= new User();
+        $this->load->model('api/user_model');
 
     }
 
     public function getBooks_get()
     {
-        if ($this->get('userId'))
+        if ($this->get('userId')=="")
         {
             $message = [
                 'id' => -2,
@@ -55,16 +54,16 @@ class Book extends REST_Controller {
 
         }
 
-        if ($this->userClient->isAdmin($this->get('userId'))){
+        if ($this->user_model->isAdmin($this->get('userId'))){
 
-            $user= $this->book_model->getAllBooks();
+            $book= $this->book_model->getAllBooks();
 
-            $this->response($user, REST_Controller::HTTP_OK);
+            $this->response($book, REST_Controller::HTTP_OK);
 
         }else{
-            $user= $this->book_model->getAllBooks();
+            $book= $this->book_model->getApprovedBooks();
 
-            $this->response($user, REST_Controller::HTTP_OK);
+            $this->response($book, REST_Controller::HTTP_OK);
 
         }
 

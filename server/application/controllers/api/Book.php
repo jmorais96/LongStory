@@ -28,25 +28,47 @@ require APPPATH . 'libraries/Format.php';
  */
 class Book extends REST_Controller {
 
+    private $userClient;
+
     function __construct()
     {
         // Construct the parent class
         parent::__construct();
 
         $this->load->model('api/book_model');
+        $this->userClient= new User();
 
     }
 
-    public function getBook_get()
+    public function getBooks_get()
     {
-        $id = $this->get('id');
+        if ($this->get('userId'))
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'necessita de mandar o id do utilizador'
+            ];
 
-        if ($id===NULL)
-            $user= $this->book_model->getBooks();
-        else
-            $user= $this->book_model->getBooks($id);
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
 
-        $this->response($user, REST_Controller::HTTP_OK);
+            return;
+
+        }
+
+        if ($this->userClient->isAdmin($this->get('userId'))){
+
+            $user= $this->book_model->getAllBooks();
+
+            $this->response($user, REST_Controller::HTTP_OK);
+
+        }else{
+            $user= $this->book_model->getAllBooks();
+
+            $this->response($user, REST_Controller::HTTP_OK);
+
+        }
+
+
     }
 
     function addBook_post()

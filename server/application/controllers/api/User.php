@@ -37,6 +37,18 @@ class User extends REST_Controller {
 
     }
 
+    public function isAdmin($id)
+    {
+
+        $user= $this->user_model->getUsers($id);
+
+
+        if ($user[0]['idProfile'] == 1)
+            return true;
+
+        return false;
+    }
+
     public function getUser_get()
     {
         $id = $this->get('id');
@@ -56,43 +68,66 @@ class User extends REST_Controller {
             'email' =>$this->post('email'),
             'pass' =>$this->post('pass'),
             'birthDate' =>$this->post('birthDate'),
+            'idProfile' =>$this->post('idProfile'),
         );
-        $user['idProfile']=2;
 
+        if ($this->post('myUserId')==""){
 
-
-        if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
-        {
-            $message = [
-                'id' => -1,
-                'message' => 'não foi passivel registar o utilizador na base de dados'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
-        $ret=$this->user_model->addUser($user);
-        if ($ret<0)
-        {
             $message = [
                 'id' => -2,
-                'message' => 'não foi passivel registar o utilizador na base de dados'
+                'message' => 'necessita de madnar o id do utilizador'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+
+        }else if ($this->isAdmin($this->post('myUserId'))){
+
+            if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
+            {
+                $message = [
+                    'id' => -1,
+                    'message' => 'não foi passivel registar o utilizador na base de dados'
+                ];
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+                return;
+            }
+            $ret=$this->user_model->addUser($user);
+            if ($ret<0)
+            {
+                $message = [
+                    'id' => -2,
+                    'message' => 'não foi passivel registar o utilizador na base de dados'
+                ];
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+                return;
+            }
+            else
+            {
+                //$user = $this->getUser_get($ret);
+                //print_r($ret);exit;
+                //$message = $this->getUser_get($ret);
+                $message=$this->user_model->getUsers($ret);
+
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+            }
+
+        }else{
+            $message = [
+                'id' => -3,
+                'message' => 'Utilizador não é administrador'
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
         }
-        else
-        {
-            //$user = $this->getUser_get($ret);
-            //print_r($ret);exit;
-            //$message = $this->getUser_get($ret);
-            $message=$this->user_model->getUsers($ret);
 
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
-        }
 
     }
 

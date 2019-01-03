@@ -15,16 +15,13 @@ class Book_model extends CI_Model
         parent::__construct();
     }
 
-    function getBooks($id=0)
+    function getApprovedBooks()
     {
 
         $this->db->select("b.idBook, b.name, a.author, b.description, b.ISBN, b.image", false);
         $this->db->from("book as b");
         $this->db->join("author as a" , "b.idAuthor=a.idAuthor");
         $this->db->where('b.idStatusBook', 1);
-
-        if ($id != 0)
-            $this->db->where('b.idBook', $id);
 
         $query=$this->db->get();
 
@@ -34,6 +31,21 @@ class Book_model extends CI_Model
 
         return $books;
 
+    }
+
+    function getAllBooks()
+    {
+        $this->db->select("b.idBook, b.name, a.author, b.description, b.ISBN, b.image", false);
+        $this->db->from("book as b");
+        $this->db->join("author as a" , "b.idAuthor=a.idAuthor");
+
+        $query=$this->db->get();
+
+        $books = array();
+        foreach ($query->result() as $t)
+            $books[] = (array) $t;
+
+        return $books;
     }
 
     function addBook($book)

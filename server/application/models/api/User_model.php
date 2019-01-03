@@ -18,7 +18,7 @@ class User_model extends CI_Model
 
     function getUsers($id=0)
     {
-        $this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, p.type", false);
+        $this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
         $this->db->from("user as u");
         $this->db->join("profile as p" , "u.idProfile=p.idProfile");
 

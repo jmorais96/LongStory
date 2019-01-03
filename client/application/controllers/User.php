@@ -46,6 +46,7 @@ class User extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->view('general/header_html');
 		$this->load->view('general/header');
 		$this->load->view('general/menu');
 		$this->load->view('general/footer');
@@ -78,6 +79,7 @@ class User extends CI_Controller {
 			'users' => json_decode($response, true)
 		);
 		//print_r($data); exit;
+		$this->load->view('general/header_html');
 		$this->load->view('general/header');
 		$this->load->view('long_story/users', $data);
 		$this->load->view('general/footer');
@@ -85,6 +87,7 @@ class User extends CI_Controller {
 
 	function addUserForm()
 	{
+		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/add_user');
 		$this->load->view('general/footer');
@@ -172,6 +175,7 @@ class User extends CI_Controller {
 		$data = array(
 			'users' => json_decode($response, true)
 		);
+		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/users', $data);
 		$this->load->view('general/footer');
@@ -204,6 +208,7 @@ class User extends CI_Controller {
 
 		$data = array('tasks' => array(json_decode($response, true)));
 		//print_r($data);
+		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/users', $data);
 		$this->load->view('general/footer');
@@ -211,6 +216,7 @@ class User extends CI_Controller {
 
 	function editUserForm()
 	{
+		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/edit_user');
 		$this->load->view('general/footer');

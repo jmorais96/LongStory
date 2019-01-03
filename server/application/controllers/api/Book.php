@@ -41,7 +41,7 @@ class Book extends REST_Controller {
 
     public function getBooks_get()
     {
-        if ($this->get('userId')=="")
+        if ($this->get('idUser')=="")
         {
             $message = [
                 'id' => -2,
@@ -54,7 +54,7 @@ class Book extends REST_Controller {
 
         }
 
-        if ($this->user_model->isAdmin($this->get('userId'))){
+        if ($this->user_model->isAdmin($this->get('idUser'))){
 
             $book= $this->book_model->getAllBooks();
 
@@ -78,9 +78,10 @@ class Book extends REST_Controller {
             'description' =>$this->post('description'),
             'ISBN' =>$this->post('isbn'),
             'image' =>$this->post('image'),
-            'idGender' =>$this->post('idGender'),
             'idRegister' =>$this->post('idRegister')
         );
+
+        $genders =$this->post('idGender');
 
         if ($book['name'] == '' || $book['author']== '' || $book['description']=="" || $book['ISBN']=="" || $book['image']=="" || $book['idGender']=="" || $book['idRegister']=="")
         {
@@ -115,5 +116,14 @@ class Book extends REST_Controller {
         }
 
     }
+
+    public function getGenders_get()
+    {
+
+        $gender= $this->book_model->getGender();
+
+        $this->response($gender, REST_Controller::HTTP_OK);
+    }
+
 
 }

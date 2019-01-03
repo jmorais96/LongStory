@@ -15,11 +15,23 @@ class User_model extends CI_Model
         parent::__construct();
     }
 
+
+    public function userExists($id)
+    {
+
+        $user = $this->getUsers($id);
+
+
+        if (count($user) > 0)
+            return true;
+
+        return false;
+
+    }
+
     public function isAdmin($id)
     {
-    	//echo $id;
         $user= $this->getUsers($id);
-        //print_r($user);
 
         if ($user[0]['idProfile'] == 1)
             return true;
@@ -109,9 +121,10 @@ class User_model extends CI_Model
 
     function getFriend($id)
     {
-        $this->db->select("u.idUser, u.name", false);
+        $this->db->select("f.idFriend, uf.name", false);
         $this->db->from("user as u");
-        $this->db->join("friends as f" , "u.idUser = f.idFriend");
+        $this->db->join("friends as f" , "u.idUser = f.idUser");
+        $this->db->join("user as uf" , "f.idFriend = uf.idUser");
         $this->db->where('f.idUser', $id);
 
         //echo $this->db->get();

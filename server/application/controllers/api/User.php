@@ -61,31 +61,42 @@ class User extends REST_Controller {
             'idProfile' =>$this->post('idProfile'),
         );
 
-        if ($this->post('myUserId')==""){
+        if ($this->post('myIdUser')==""){
 
             $message = [
-                'id' => -2,
-                'message' => 'necessita de mandar o id do utilizador'
+                'id' => -4,
+                'message' => 'necessita de madnar o id do utilizador'
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
+        }
 
-        }else if ($this->user_model->isAdmin($this->post('myUserId'))){
 
-            if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
-            {
+        if (!$this->user_model->userExists($this->post('myIdUser'))){
+            $message = [
+                'id' => -3,
+                'message' => 'Utilizador não existe'
+            ];
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+
+        if ($this->user_model->isAdmin($this->post('myIdUser'))) {
+
+            if ($user['name'] == '' || $user['email'] == '' || $user['pass'] == "") {
                 $message = [
                     'id' => -1,
-                    'message' => 'não foi passivel registar o utilizador na base de dados'
+                    'message' => 'É necessário preencher o nome, email e password'
                 ];
 
                 $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
                 return;
             }
-            $ret=$this->user_model->addUser($user);
-            if ($ret<0)
-            {
+
+            $ret = $this->user_model->addUser($user);
+            if ($ret < 0) {
                 $message = [
                     'id' => -2,
                     'message' => 'não foi passivel registar o utilizador na base de dados'
@@ -94,19 +105,14 @@ class User extends REST_Controller {
                 $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
                 return;
             }
-            else
-            {
-                //$user = $this->getUser_get($ret);
-                //print_r($ret);exit;
-                //$message = $this->getUser_get($ret);
-                $message=$this->user_model->getUsers($ret);
 
+            $message = $this->user_model->getUsers($ret);
 
-                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
-            }
-
-        }else{
+        }
+        else
+        {
             $message = [
                 'id' => -3,
                 'message' => 'Utilizador não é administrador'
@@ -115,9 +121,6 @@ class User extends REST_Controller {
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
         }
-
-
-
 
     }
 

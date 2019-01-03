@@ -1591,6 +1591,8 @@ img{
 	float: left;
 	margin-top: -6px;
 	width: 100%;
+	//position: absolute;
+	bottom: 0;
 }
 .footer-top {
 	display: inline;

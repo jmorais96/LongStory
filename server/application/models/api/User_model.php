@@ -17,11 +17,11 @@ class User_model extends CI_Model
 
     public function isAdmin($id)
     {
-
+    	//echo $id;
         $user= $this->getUsers($id);
+        //print_r($user);
 
-
-        if ($user['idProfile'] == 1)
+        if ($user[0]['idProfile'] == 1)
             return true;
 
         return false;
@@ -36,6 +36,9 @@ class User_model extends CI_Model
 
         if ($id != 0)
             $this->db->where('u.idUser', $id);
+
+
+        echo $this->db->last_query();
 
         $query=$this->db->get();
 

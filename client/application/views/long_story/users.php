@@ -26,7 +26,7 @@
 		<td scope="col" >Email</td>
 		<td scope="col" >Pass</td>
 		<td scope="col" >Birth Date</td>
-		<td scope="col" >Edith</td>
+		<td scope="col" >Edit</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -39,7 +39,7 @@
 			<td><?php echo  $user['email'] ?></td>
 			<td><?php echo  $user['pass'] ?></td>
 			<td><?php echo  $user['birthDate'] ?></td>
-			<td><button class="btn btn-green">edit</button></td>
+			<td><a class="download-btn" href="<?php echo site_url("user/editUserForm"); ?>">EDIT</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

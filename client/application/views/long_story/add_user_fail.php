@@ -6,9 +6,9 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
-		<div class="form-group row">
-			<h3>Utilizador não foi criado <?php echo $message["message"]; ?></h3>
+	<div class="col-lg-12" style="justify-content: center;height: 450px; display: flex; align-items: center" >
+		<div class="alert alert-danger" style="height: 50px">
+			<strong>Erro!</strong> <?php echo $message["message"]; ?><!--Utilizador não é administrador-->
 		</div>
 	</div>
 

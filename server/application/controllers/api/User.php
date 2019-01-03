@@ -213,4 +213,12 @@ class User extends REST_Controller {
         $this->response($users, REST_Controller::HTTP_OK);
     }
 
+    public function getProfile_get()
+    {
+
+        $profile= $this->user_model->getProfile();
+
+        $this->response($profile, REST_Controller::HTTP_OK);
+    }
+
 }

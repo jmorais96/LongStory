@@ -21,7 +21,7 @@ class User_model extends CI_Model
         $user= $this->getUsers($id);
 
 
-        if ($user[0]['idProfile'] == 1)
+        if ($user['idProfile'] == 1)
             return true;
 
         return false;
@@ -122,6 +122,21 @@ class User_model extends CI_Model
 
         return $users;
 
+    }
+
+    function getProfile()
+    {
+        $this->db->select("p.idProfile, p.type", false);
+        $this->db->from("profile as p");
+
+        $query=$this->db->get();
+
+
+        $profiles = array();
+        foreach ($query->result() as $t)
+            $profiles[] = (array) $t;
+
+        return $profiles;
     }
 
 }

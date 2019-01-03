@@ -75,7 +75,7 @@ class User extends REST_Controller {
 
             $message = [
                 'id' => -2,
-                'message' => 'necessita de madnar o id do utilizador'
+                'message' => 'necessita de mandar o id do utilizador'
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);

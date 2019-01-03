@@ -1,3 +1,4 @@
+
 <div class="row">
     <div class="col-lg-12">
         <h2> New user's registration</h2>
@@ -15,9 +16,18 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="form-group row">
-			<?php echo form_label('IdUser', 'idUser', array('class' => 'col-lg-3 control-label'))?>
+			<?php echo form_label('MyUserId', 'myUserId', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
-				<?php echo form_input('idUser', set_value('idUser'), 'class="form-control"')?>
+				<?php echo form_input('myUserId', set_value('myUserId'), 'class="form-control"')?>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="form-group row">
+			<?php echo form_label('IdProfile', 'idProfile', array('class' => 'col-lg-3 control-label'))?>
+			<div class="col-lg-12">
+				<?php echo form_input('idProfile', set_value('idProfile'), 'class="form-control"')?>
 			</div>
 		</div>
 	</div>

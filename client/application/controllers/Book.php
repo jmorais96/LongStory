@@ -89,6 +89,6 @@ class Book extends CI_Controller
 		$this->load->view('long_story/books', $data);
 		$this->load->view('general/footer');
 	}
-//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
+//http://localhost:8888/webServices/LongStory/client/index.php/Book/getBook
 ///////////////////////////////////// END GET BOOK ///////////////////////////////////
 }

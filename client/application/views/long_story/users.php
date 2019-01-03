@@ -7,11 +7,10 @@
  */
 //var_dump($movies);
 ?>
-
 <span id="list_users">
 	<div style="display:flex;width: 100%; justify-content: space-between; align-items:center">
 		<div><h1>List of users</h1></div>
-		<div><a class="download-btn" href="<?php echo site_url("user/addUserValidation"); ?>">CREATE USER</a></div>
+		<div><a class="download-btn" href="<?php echo site_url("user/addUserForm"); ?>">CREATE USER</a></div>
 	</div>
 <table class="table table-bordered table-hover">
 	<thead>

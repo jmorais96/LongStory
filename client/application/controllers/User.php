@@ -64,12 +64,21 @@ class User extends CI_Controller {
 		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($con, CURLOPT_POST, TRUE);
 		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
-		$response=curl_exec($con);
-		if (!curl_errno($con)){
-			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)){
-				case 200: break;
-				default: echo "Unexpected HTTP code: ", $http_code, "\n";
-					exit;
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 201:
+					break;
+				default: //echo "Unexpected HTTP code: ", $http_code, "\n";
+					print_r($response);exit;
+					$data = array(
+						'message' => json_decode($response, true)
+					);
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					$this->load->view('long_story/add_user_fail', $data);
+					$this->load->view('general/footer');
+					return;
 			}
 		}
 
@@ -80,7 +89,7 @@ class User extends CI_Controller {
 		);
 		//print_r($data); exit;
 		$this->load->view('general/header_html');
-		$this->load->view('general/header');
+		$this->load->view('general/menu');
 		$this->load->view('long_story/users', $data);
 		$this->load->view('general/footer');
 	}
@@ -95,47 +104,24 @@ class User extends CI_Controller {
 
 	function addUserValidation()
 	{
+		$this->form_validation->set_rules('myUserId', 'MyUserId', 'required');
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('pass', 'Pass', 'required');
 		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
+		$this->form_validation->set_rules('idProfile', 'IdProfile', 'required');
+
 
 		if ($this->form_validation->run() === TRUE)
 		{
 			$post_data = array(
+				'myUserId' => $this->input->post('myUserId'),
 				'name' => $this->input->post('name'),
 				'email' => $this->input->post('email'),
 				'pass' => $this->input->post('pass'),
 				'birthDate' => $this->input->post('birthDate'),
+				'idProfile' =>$this->input->post('idProfile')
 			);
-
-		/*	if (isset($_FILES) && $_FILES['userfile']['error']==0){
-				$config['upload_path'] = 'upload/';
-				$config['allowed_types'] = '*';
-				$this->load->library('upload', $config);
-
-				if (! $this->upload->do_upload('userfile')){
-					$data= array(
-						'message' => $this->upload->display_errors()
-					);
-
-					$this->load->view('general/header');
-					echo $data['message'];
-					$this->load->view('general/footer');
-				}
-				else
-				{
-					$upload_data= $this->upload->data();
-					//print_r($upload_data); exit;
-					$post_data['userfile'] = base64_encode(
-						file_get_contents($upload_data['full_path'])
-					);
-				}
-			}
-			else
-			{
-				echo "deu erro a fazer upload";
-			}*/
 
 			//print_r($post_data); exit;
 			$this->addUser($post_data);

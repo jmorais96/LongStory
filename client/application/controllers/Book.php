@@ -201,4 +201,36 @@ class Book extends CI_Controller
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/Book/getBook
 	///////////////////////////////////// END GET BOOK ///////////////////////////////////
+
+	///////////////////////////////////// VIEW BOOK ///////////////////////////////////
+	function viewBook($id = 0)
+	{
+		if ($id == 0)
+			return;
+		else
+		{
+			$con = curl_init();
+			$url = $this->api_url.'getBooks/'.($id != 0 ? '/id/'.$id : '');
+			curl_setopt($con, CURLOPT_URL, $url);
+			curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+			$response = curl_exec($con);
+
+			// Check HTTP status code
+			$book = json_decode($response,TRUE);
+			curl_close($con);
+
+			if (empty($book))
+			{
+				echo "não foi encontrado o livro";
+			}
+			else
+			{
+				$this->load->view('general/header_html');
+				$this->load->view('book/viewBook', $book[0]);
+				$this->load->view('general/footer');
+			}
+		}
+	}
+	///////////////////////////////////// END VIEW BOOK ///////////////////////////////////
+
 }

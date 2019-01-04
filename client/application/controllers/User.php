@@ -105,7 +105,7 @@ class User extends CI_Controller {
 
 	function addUserValidation()
 	{
-		$this->form_validation->set_rules('myIdUser', 'IdUser', 'required');
+		$this->form_validation->set_rules('myIdUser', 'MyIdUser', 'required');
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('pass', 'Pass', 'required');
@@ -170,6 +170,42 @@ class User extends CI_Controller {
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
 	///////////////////////////////////// END GET USER ///////////////////////////////////
 
+	///////////////////////////////////// GET USER ///////////////////////////////////
+	function getUserBooks($id = 0)
+	{
+
+		$con = curl_init();
+		if ($id == 0)
+			curl_setopt($con, CURLOPT_URL, $this->api_url.'/getuserbooks/');
+		else
+			curl_setopt($con, CURLOPT_URL, $this->api_url.'/getuserbooks/id/'. $id);
+
+
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response=curl_exec($con);
+	//	print_r($response);exit;
+		if (!curl_errno($con)){
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)){
+				case 200: break;
+				default: echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'users' => json_decode($response, true)
+		);
+		//print_r($data);
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/users_books', $data);
+		$this->load->view('general/footer');
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUserBooks
+	///////////////////////////////////// END GET USER ///////////////////////////////////
+
 	///////////////////////////////////// EDIT USER ///////////////////////////////////
 	function editUser($post_data)
 	{
@@ -177,11 +213,12 @@ class User extends CI_Controller {
 		//print_r( $post_data);
 
 		$con = curl_init();
-		curl_setopt($con, CURLOPT_URL, $this->api_url);
+		curl_setopt($con, CURLOPT_URL, $this->api_url. '/editUser/');
 		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($con, CURLOPT_POST, true);
 		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
 		$response = curl_exec($con);
+		//print_r($response);exit;
 
 		if(!curl_errno($con)) {
 			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE))
@@ -193,7 +230,7 @@ class User extends CI_Controller {
 		}
 		curl_close($con);
 
-		$data = array('tasks' => array(json_decode($response, true)));
+		$data = array('users' => json_decode($response, true));
 		//print_r($data);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
@@ -237,7 +274,6 @@ class User extends CI_Controller {
 		$this->form_validation->set_rules('myIdUser', 'IdUser', 'required');
 		$this->form_validation->set_rules('idUser', 'IdUser', 'required');
 		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('pass', 'Pass', 'required');
 		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
 		$this->form_validation->set_rules('idProfile', 'IdProfile', 'required');
@@ -248,7 +284,6 @@ class User extends CI_Controller {
 				'myIdUser' => $this->input->post('myIdUser'),
 				'idUser' => $this->input->post('idUser'),
 				'name' => $this->input->post('name'),
-				'email' => $this->input->post('email'),
 				'pass' => $this->input->post('pass'),
 				'birthDate' => $this->input->post('birthDate'),
 				'idProfile' =>$this->input->post('idProfile')
@@ -264,7 +299,37 @@ class User extends CI_Controller {
 		}
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/editUserForm
-	///////////////////////////////////// EDIT USER ///////////////////////////////////
+/////////////////////////////////////// EDIT USER ///////////////////////////////////
+
+///////////////////////////////////// GET FRIENDS ///////////////////////////////////
+
+	function getFriends($id = 0)
+	{
+
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url.'/getfriends/id/'. $id);
 
 
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response=curl_exec($con);
+		if (!curl_errno($con)){
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)){
+				case 200: break;
+				default: echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'friends' => json_decode($response, true)
+		);
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/friends', $data);
+		$this->load->view('general/footer');
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
+///////////////////////////////////// END GET FRIENDS ///////////////////////////////////
 }

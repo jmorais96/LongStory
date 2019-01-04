@@ -50,7 +50,10 @@ class Book_model extends CI_Model
 
     function addBook($book, $genders)
     {
-        $book['author']=$this->addAuthor($book['author']);
+        $book['idAuthor']=$this->addAuthor($book['author']);
+
+        unset($book['author']);
+        $book['idstatusBook']=3;
         $ret = $this->db->insert('book', $book);
 
         foreach ($genders as $key => $value){
@@ -65,6 +68,33 @@ class Book_model extends CI_Model
         $book_id = $this->db->insert_id();
 
         return $book_id;
+    }
+
+    function getBook($id)
+    {
+        $this->db->select("b.name, b.name, a.author, b.description, b.ISBN, b.image");
+        $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
+        $this->db->where('b.idBook', $id );
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        $this->db->select("g.gender");
+        $this->db->from("gender as g");
+        $this->db->join("book_has_gender as bg", "g.idGender = bg.idGender");
+        $this->db->where('bg.idBook', $id );
+
+
+        $book['genders'] = "";
+        foreach ($query->result() as $t)
+            $book['genders'].=",". (string) $t;
+
+
+        return $book;
     }
 
     function addAuthor($author)

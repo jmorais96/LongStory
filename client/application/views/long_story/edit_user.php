@@ -14,24 +14,22 @@
 	</div>
 </div>
 
-	<?php $myIdUser = $user[0]['myIdUser']?>
 	<div class="row">
 	<div class="col-lg-12">
 		<div class="form-group row">
 			<?php echo form_label('MyIdUser', 'myIdUser', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
-				<?php echo form_input('myIdUser', $myIdUser, "class='form-control'")?>
+				<?php echo form_input('myIdUser', set_value(''),"class='form-control'")?>
 			</div>
 		</div>
 	</div>
 
 	<?php $idUser = $user[0]['idUser']?>
-	<div class="row">
 		<div class="col-lg-12">
 			<div class="form-group row">
 				<?php echo form_label('IdUser', 'idUser', array('class' => 'col-lg-3 control-label'))?>
 				<div class="col-lg-12">
-					<?php echo form_input('idUser', $iduser, "class='form-control'")?>
+					<?php echo form_input('idUser', $idUser, "class='form-control'")?>
 				</div>
 			</div>
 	</div>

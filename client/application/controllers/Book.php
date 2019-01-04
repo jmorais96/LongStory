@@ -55,17 +55,97 @@ class Book extends CI_Controller
 		//$this->getMovies();
 	}
 
+	///////////////////////////////////// CREATE BOOK ///////////////////////////////////
+	function addBook($post_data)
+	{
+		//print_r($post_data); exit;
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url . '/addbook/');
+		//echo $this->api_url . '/adduser/'; exit;
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($con, CURLOPT_POST, TRUE);
+		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 201:
+					break;
+				default: //echo "Unexpected HTTP code: ", $http_code, "\n";
+					//print_r($response);exit;
+					$data = array(
+						'message' => json_decode($response, true)
+					);
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					$this->load->view('long_story/add_book_fail', $data);
+					$this->load->view('general/footer');
+					return;
+			}
+		}
 
-///////////////////////////////////// GET BOOK ///////////////////////////////////
+		curl_close($con);
 
-	function getBook($id = 0)
+		$data = array(
+			'books' => json_decode($response, true)
+		);
+		//print_r($data); exit;
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/books', $data);
+		$this->load->view('general/footer');
+	}
+
+	function addBookForm()
+	{
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/add_book');
+		$this->load->view('general/footer');
+	}
+
+	function addBookValidation()
+	{
+		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('author', 'Author', 'required');
+		$this->form_validation->set_rules('description', 'Description', 'required');
+		$this->form_validation->set_rules('isbn', 'Isbn', 'required');
+	//	$this->form_validation->set_rules('image', 'Image', 'required');
+		$this->form_validation->set_rules('idGender', 'IdGender', 'required');
+		$this->form_validation->set_rules('idRegister', 'IdRegister', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'name' => $this->input->post('name'),
+				'author' => $this->input->post('author'),
+				'description' => $this->input->post('description'),
+				'isbn' => $this->input->post('isbn'),
+				//'idProfile' =>$this->input->post('image'),
+				'idGender' =>$this->input->post('idGender'),
+				'idRegister' =>$this->input->post('idRegister')
+			);
+
+			//print_r($post_data); exit;
+			$this->addBook($post_data);
+		}
+		else
+		{
+			$this->addBookForm();
+		}
+	}
+	//http://localhost:8888/webServices/LongStory/client/index.php/User/addBookForm
+	///////////////////////////////////// END CREATE BOOK ///////////////////////////////////
+
+	///////////////////////////////////// GET BOOK ///////////////////////////////////
+
+	function getBooks($id = 0)
 	{
 
 		$con = curl_init();
 		if ($id == 0)
-			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getbook/');
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getbooks/');
 		else
-			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getbook/id/' . $id);
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getbooks/idUser/' . $id);
 
 
 		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
@@ -83,12 +163,13 @@ class Book extends CI_Controller
 		curl_close($con);
 
 		$data = array(
-			'users' => json_decode($response, true)
+			'books' => json_decode($response, true)
 		);
+		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/books', $data);
 		$this->load->view('general/footer');
 	}
-//http://localhost:8888/webServices/LongStory/client/index.php/Book/getBook
-///////////////////////////////////// END GET BOOK ///////////////////////////////////
+	//http://localhost:8888/webServices/LongStory/client/index.php/Book/getBook
+	///////////////////////////////////// END GET BOOK ///////////////////////////////////
 }

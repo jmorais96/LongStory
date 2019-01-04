@@ -76,14 +76,15 @@ class Book extends REST_Controller {
             'name' =>$this->post('name'),
             'author' =>$this->post('author'),
             'description' =>$this->post('description'),
-            'ISBN' =>$this->post('isbn'),
+            'ISBN' =>$this->post('ISBN'),
             'image' =>$this->post('image'),
             'idRegister' =>$this->post('idRegister')
         );
 
-        $genders =$this->post('idGender');
+        $genders = serialize($this->post('idGender'));
 
-        if ($book['name'] == '' || $book['author']== '' || $book['description']=="" || $book['ISBN']=="" || $book['image']=="" || $book['idGender']=="" || $book['idRegister']=="")
+
+        if ($book['name'] == '' || $book['author']== '' || $book['description']=="" || $book['ISBN']=="" || $book['image']=="" || $genders=="" || $book['idRegister']=="")
         {
             $message = [
                 'id' => -1,
@@ -93,7 +94,7 @@ class Book extends REST_Controller {
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
         }
-        $ret=$this->book_model->addBook($book);
+        $ret=$this->book_model->addBook($book, $genders);
         if ($ret<0)
         {
             $message = [

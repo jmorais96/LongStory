@@ -9,7 +9,7 @@
 ?>
 <span id="list_users">
 	<div style="display:flex;width: 100%; justify-content: space-between; align-items:center">
-		<div><h1>List of users and their books</h1></div>
+		<div><h1>Select your user</h1></div>
 		<div><a class="download-btn" href="<?php echo site_url("book/addBookForm"); ?>">ADD BOOK</a></div>
 	</div>
 <table class="table table-bordered table-hover">
@@ -26,7 +26,8 @@
 		<td scope="col" >Email</td>
 		<!--<td scope="col" >Pass</td>
 		<td scope="col" >Birth Date</td>-->
-		<td scope="col" >Books</td>
+		<td scope="col" >All Books</td>
+		<td scope="col" >Owned Books</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -39,7 +40,8 @@
 			<td><?php echo  $user['email'] ?></td>
 			<!--<td><?php //echo  $user['pass'] ?></td>
 			<td><?php //echo  $user['birthDate'] ?></td>-->
-			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">BOOKS</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">ALL BOOKS</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getOwned/".$user['idUser']); ?>">OWNED BOOKS</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

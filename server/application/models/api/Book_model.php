@@ -48,17 +48,62 @@ class Book_model extends CI_Model
         return $books;
     }
 
-    function addBook($book)
+    function addBook($book, $genders)
     {
-        $book['author']=$this->addAuthor($book['author']);
+        $book['idAuthor']=$this->addAuthor($book['author']);
+
+        unset($book['author']);
+        $book['idstatusBook']=3;
         $ret = $this->db->insert('book', $book);
+
+        if (!isset($genders[1]))
+        {
+            $genders=array($genders);
+        }
+
+        $book_id = $this->db->insert_id();
+
+        foreach ($genders as $key => $value){
+
+            $book_gender=array('idBook'=>$book_id, 'idGender'=>$value);
+            //print_r($book_gender);exit;
+            $this->db->insert('book_has_gender', $book_gender);
+        }
+
 
         if (!$ret)
             return -1;
 
-        $book_id = $this->db->insert_id();
+
 
         return $book_id;
+    }
+
+    function getBook($id)
+    {
+        $this->db->select("b.name, b.name, a.author, b.description, b.ISBN, b.image");
+        $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
+        $this->db->where('b.idBook', $id );
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        $this->db->select("g.gender");
+        $this->db->from("gender as g");
+        $this->db->join("book_has_gender as bg", "g.idGender = bg.idGender");
+        $this->db->where('bg.idBook', $id );
+
+
+        $book['genders'] = "";
+        foreach ($query->result() as $t)
+            $book['genders'].=",". (string) $t;
+
+
+        return $book;
     }
 
     function addAuthor($author)
@@ -90,6 +135,7 @@ class Book_model extends CI_Model
         return $authorId;
     }
 
+
     function getGender()
     {
         $this->db->select("g.idGender, g.gender", false);
@@ -103,6 +149,11 @@ class Book_model extends CI_Model
             $genders[] = (array) $t;
 
         return $genders;
+    }
+
+    function getBookInfo()
+    {
+        
     }
 
 }

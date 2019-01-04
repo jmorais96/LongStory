@@ -76,13 +76,15 @@ class Book extends REST_Controller {
             'name' =>$this->post('name'),
             'author' =>$this->post('author'),
             'description' =>$this->post('description'),
-            'ISBN' =>$this->post('isbn'),
+            'ISBN' =>$this->post('ISBN'),
             'image' =>$this->post('image'),
-            'idGender' =>$this->post('idGender'),
             'idRegister' =>$this->post('idRegister')
         );
 
-        if ($book['name'] == '' || $book['author']== '' || $book['description']=="" || $book['ISBN']=="" || $book['image']=="" || $book['idGender']=="" || $book['idRegister']=="")
+        $genders = $this->post('idGender');
+
+
+        if ($book['name'] == '' || $book['author']== '' || $book['description']=="" || $book['ISBN']=="" || $book['image']=="" || $genders=="" || $book['idRegister']=="")
         {
             $message = [
                 'id' => -1,
@@ -92,7 +94,9 @@ class Book extends REST_Controller {
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
             return;
         }
-        $ret=$this->book_model->addBook($book);
+
+        $ret=$this->book_model->addBook($book, $genders);
+
         if ($ret<0)
         {
             $message = [
@@ -124,50 +128,12 @@ class Book extends REST_Controller {
         $this->response($gender, REST_Controller::HTTP_OK);
     }
 
-    function addMovie_post()
+    public function getBookInfo_get($id)
     {
-        $movie = array(
-            'title' =>$this->post('title'),
-            'year' =>$this->post('year'),
-            'description' =>$this->post('description'),
-            'imdb_id' =>$this->post('imdb_id'),
-            'user_id' =>$this->post('user_id'),
-            'photo' => $this->post('userfile')
-        );
 
-        $genders = $this->post('gender_id');
+        $book= $this->book_model->getBookInfo();
 
-        if ($movie['title'] == '' || $movie['year']== '' || $movie['user_id']=="" || $genders=='')
-        {
-            $message = [
-                'id' => -1,
-                'message' => 'não foi passivel registar o filme na base de dados'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
-        $ret=$this->movie_model->addMovie($movie, $genders);
-        if ($ret<0)
-        {
-            $message = [
-                'id' => -2,
-                'message' => 'não foi passivel registar o filme na base de dados'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
-        else
-        {
-            $message = [
-                'id' => 0,
-                'message' => 'Filme criado',
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
-
-        }
+        $this->response($book, REST_Controller::HTTP_OK);
 
     }
 

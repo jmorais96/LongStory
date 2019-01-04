@@ -108,7 +108,7 @@ class Book extends CI_Controller
 		$this->form_validation->set_rules('name', 'Name', 'required');
 		$this->form_validation->set_rules('author', 'Author', 'required');
 		$this->form_validation->set_rules('description', 'Description', 'required');
-		$this->form_validation->set_rules('isbn', 'Isbn', 'required');
+		$this->form_validation->set_rules('ISBN', 'ISBN', 'required');
 	//	$this->form_validation->set_rules('image', 'Image', 'required');
 		$this->form_validation->set_rules('idGender', 'IdGender', 'required');
 		$this->form_validation->set_rules('idRegister', 'IdRegister', 'required');
@@ -119,7 +119,7 @@ class Book extends CI_Controller
 				'name' => $this->input->post('name'),
 				'author' => $this->input->post('author'),
 				'description' => $this->input->post('description'),
-				'isbn' => $this->input->post('isbn'),
+				'ISBN' => $this->input->post('ISBN'),
 				//'idProfile' =>$this->input->post('image'),
 				'idGender' =>$this->input->post('idGender'),
 				'idRegister' =>$this->input->post('idRegister')

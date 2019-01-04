@@ -56,16 +56,25 @@ class Book_model extends CI_Model
         $book['idstatusBook']=3;
         $ret = $this->db->insert('book', $book);
 
+        if (!isset($genders[1]))
+        {
+            $genders=array($genders);
+        }
+
+        $book_id = $this->db->insert_id();
+
         foreach ($genders as $key => $value){
-            $book_gender=array($ret['bookId'], $value);
-            $ret = $this->db->insert('book_has_gender', $book_gender);
+
+            $book_gender=array('idBook'=>$book_id, 'idGender'=>$value);
+            //print_r($book_gender);exit;
+            $this->db->insert('book_has_gender', $book_gender);
         }
 
 
         if (!$ret)
             return -1;
 
-        $book_id = $this->db->insert_id();
+
 
         return $book_id;
     }
@@ -140,6 +149,11 @@ class Book_model extends CI_Model
             $genders[] = (array) $t;
 
         return $genders;
+    }
+
+    function getBookInfo()
+    {
+        
     }
 
 }

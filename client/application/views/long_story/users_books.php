@@ -9,8 +9,8 @@
 ?>
 <span id="list_users">
 	<div style="display:flex;width: 100%; justify-content: space-between; align-items:center">
-		<div><h1>List of users</h1></div>
-		<div><a class="download-btn" href="<?php echo site_url("user/addUserForm"); ?>">CREATE USER</a></div>
+		<div><h1>List of users and their books</h1></div>
+		<div><a class="download-btn" href="<?php echo site_url("book/addBookForm"); ?>">ADD BOOK</a></div>
 	</div>
 <table class="table table-bordered table-hover">
 	<thead>
@@ -24,10 +24,9 @@
 	<tr>
 		<td scope="col" >Name</td>
 		<td scope="col" >Email</td>
-		<td scope="col" >Pass</td>
-		<td scope="col" >Birth Date</td>
-		<td scope="col" >Edit</td>
-		<td scope="col" >Friends</td>
+		<!--<td scope="col" >Pass</td>
+		<td scope="col" >Birth Date</td>-->
+		<td scope="col" >Books</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -38,10 +37,9 @@
 		<tr>
 			<td><?php echo  $user['name'] ?></td>
 			<td><?php echo  $user['email'] ?></td>
-			<td><?php echo  $user['pass'] ?></td>
-			<td><?php echo  $user['birthDate'] ?></td>
-			<td><a class="download-btn" href="<?php echo site_url("user/editUserForm/".$user['idUser']); ?>">EDIT</a></td>
-			<td><a class="download-btn" href="<?php echo site_url("user/getfriends/".$user['idUser']); ?>">FRIENDS</a></td>
+			<!--<td><?php //echo  $user['pass'] ?></td>
+			<td><?php //echo  $user['birthDate'] ?></td>-->
+			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">BOOKS</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

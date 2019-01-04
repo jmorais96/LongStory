@@ -16,9 +16,9 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="form-group row">
-			<?php echo form_label('MyUserId', 'myUserId', array('class' => 'col-lg-3 control-label'))?>
+			<?php echo form_label('MyIdUser', 'myIdUser', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
-				<?php echo form_input('myUserId', set_value('myUserId'), 'class="form-control"')?>
+				<?php echo form_input('myIdUser', set_value('myIdUser'), 'class="form-control"')?>
 			</div>
 		</div>
 	</div>

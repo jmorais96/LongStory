@@ -10,140 +10,154 @@ if (!defined('BASEPATH')) die();
 
 class User_model extends CI_Model
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function isAdmin($id)
-    {
-    	//echo $id;
-        $user= $this->getUsers($id);
-        //print_r($user);
-
-
-        if (count($user)==0)
-            return "not found";
-
-        if ($user['idProfile'] == 1)
-            return true;
-
-        return false;
-    }
+	public function isAdmin($id)
+	{
+		//
+		//echo $id;
+		$user= $this->getUsers($id);
 
 
-    function getUsers($id=0)
-    {
-        $this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
-        $this->db->from("user as u");
-        $this->db->join("profile as p" , "u.idProfile=p.idProfile");
+		if ($user[0]['idProfile'] == 1)
+			return true;
 
-        if ($id != 0)
-            $this->db->where('u.idUser', $id);
+		return false;
+	}
 
 
-        echo $this->db->last_query();
+	function getUsers($id=0)
+	{
+		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
+		$this->db->from("user as u");
+		$this->db->join("profile as p" , "u.idProfile=p.idProfile");
 
-        $query=$this->db->get();
+		if ($id != 0)
+			$this->db->where('u.idUser', $id);
 
-
-        $users = array();
-        foreach ($query->result() as $t)
-            $users[] = (array) $t;
-
-        return $users;
-
-    }
-
-    function addUser($user)
-    {
-        $ret = $this->db->insert('user', $user);
-
-        if (!$ret)
-            return -1;
-
-        $user_id = $this->db->insert_id();
-
-        return $user_id;
-    }
-
-    function editUser($user)
-    {
-        if ($user['name']!='')
-        {
-            $this->db->set('name', $user['name']);
-        }
-
-        if ($user['pass']!='')
-        {
-            $this->db->set('pass', $user['pass']);
-        }
-
-        if ($user['birthDate']!='')
-        {
-            $this->db->set('birthDate', $user['birthDate']);
-        }
-
-        if ($user['idProfile']!='')
-        {
-            $this->db->set('idProfile', $user['idProfile']);
-        }
-
-        $this->db->where('idUser', $user['idUser']);
+		$query=$this->db->get();
 
 
-        $ret = $this->db->update('user');
+		$users = array();
+		foreach ($query->result() as $t)
+			$users[] = (array) $t;
 
-        if (!$ret)
-            return -1;
+		return $users;
 
+	}
+	function getUsersBooks($id=0)
+	{
+		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
+		$this->db->from("user as u");
+		$this->db->join("profile as p" , "u.idProfile=p.idProfile");
 
-        return $this->getUsers($user['idUser']);
-    }
+		if ($id != 0)
+			$this->db->where('u.idUser', $id);
 
-    function addFriend($user)
-    {
-        $ret = $this->db->insert('friends', $user);
-
-        if (!$ret)
-            return -1;
-
-        return 1;
-    }
-
-    function getFriend($id)
-    {
-        $this->db->select("u.idUser, u.name", false);
-        $this->db->from("user as u");
-        $this->db->join("friends as f" , "u.idUser = f.idFriend");
-        $this->db->where('f.idUser', $id);
-
-        //echo $this->db->get();
-
-        $query=$this->db->get();
+		$query=$this->db->get();
 
 
-        $users = array();
-        foreach ($query->result() as $t)
-            $users[] = (array) $t;
+		$users = array();
+		foreach ($query->result() as $t)
+			$users[] = (array) $t;
 
-        return $users;
+		return $users;
 
-    }
+	}
 
-    function getProfile()
-    {
-        $this->db->select("p.idProfile, p.type", false);
-        $this->db->from("profile as p");
+	function addUser($user)
+	{
+		$ret = $this->db->insert('user', $user);
 
-        $query=$this->db->get();
+		if (!$ret)
+			return -1;
+
+		$user_id = $this->db->insert_id();
+
+		return $user_id;
+	}
+
+	function editUser($user)
+	{
+		if ($user['name']!='')
+		{
+			$this->db->set('name', $user['name']);
+		}
+
+		if ($user['pass']!='')
+		{
+			$this->db->set('pass', $user['pass']);
+		}
+
+		if ($user['birthDate']!='')
+		{
+			$this->db->set('birthDate', $user['birthDate']);
+		}
+
+		if ($user['idProfile']!='')
+		{
+			$this->db->set('idProfile', $user['idProfile']);
+		}
+
+		$this->db->where('idUser', $user['idUser']);
 
 
-        $profiles = array();
-        foreach ($query->result() as $t)
-            $profiles[] = (array) $t;
+		$ret = $this->db->update('user');
 
-        return $profiles;
-    }
+		if (!$ret)
+			return -1;
+
+
+		return $this->getUsers($user['idUser']);
+	}
+
+	function addFriend($user)
+	{
+		$ret = $this->db->insert('friends', $user);
+
+		if (!$ret)
+			return -1;
+
+		return 1;
+	}
+
+	function getFriend($id)
+	{
+		$this->db->select("f.idFriend, uf.name, uf.email", false);
+		$this->db->from("user as u");
+		$this->db->join("friends as f" , "u.idUser = f.idUser");
+		$this->db->join("user as uf" , "f.idFriend = uf.idUser");
+		$this->db->where('f.idUser', $id);
+
+		//echo $this->db->get();
+
+		$query=$this->db->get();
+
+
+		$users = array();
+		foreach ($query->result() as $t)
+			$users[] = (array) $t;
+
+		return $users;
+
+	}
+
+	function getProfile()
+	{
+		$this->db->select("p.idProfile, p.type", false);
+		$this->db->from("profile as p");
+
+		$query=$this->db->get();
+
+
+		$profiles = array();
+		foreach ($query->result() as $t)
+			$profiles[] = (array) $t;
+
+		return $profiles;
+	}
 
 }

@@ -28,205 +28,208 @@ require APPPATH . 'libraries/Format.php';
  */
 class User extends REST_Controller {
 
-    function __construct()
-    {
-        // Construct the parent class
-        parent::__construct();
+	function __construct()
+	{
+		// Construct the parent class
+		parent::__construct();
 
-        $this->load->model('api/user_model');
+		$this->load->model('api/user_model');
 
-    }
-
-
-
-    public function getUser_get()
-    {
-        $id = $this->get('id');
-
-        if ($id===NULL)
-            $user= $this->user_model->getUsers();
-        else
-            $user= $this->user_model->getUsers($id);
-
-        $this->response($user, REST_Controller::HTTP_OK);
-    }
-
-    function addUser_post()
-    {
-        $user = array(
-            'name' =>$this->post('name'),
-            'email' =>$this->post('email'),
-            'pass' =>$this->post('pass'),
-            'birthDate' =>$this->post('birthDate'),
-            'idProfile' =>$this->post('idProfile'),
-        );
-
-        if ($this->post('myIdUser')==""){
-
-            $message = [
-                'id' => -4,
-                'message' => 'necessita de madnar o id do utilizador'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-
-        }else if ($this->user_model->isAdmin($this->post('myIdUser'))=="not found"){
-
-            $message = [
-                'id' => -3,
-                'message' => 'Utilizador não existe'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-
-        } else if (!$this->user_model->isAdmin($this->post('myIdUser'))){
-
-            if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
-            {
-                $message = [
-                    'id' => -1,
-                    'message' => 'não foi passivel registar o utilizador na base de dados'
-                ];
-
-                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-                return;
-            }
-            $ret=$this->user_model->addUser($user);
-            if ($ret<0)
-            {
-                $message = [
-                    'id' => -2,
-                    'message' => 'não foi passivel registar o utilizador na base de dados'
-                ];
-
-                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-                return;
-            }
-            else
-            {
-
-                $message=$this->user_model->getUsers($ret);
-
-
-                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
-
-            }
-
-        }else{
-            $message = [
-                'id' => -3,
-                'message' => 'Utilizador não é administrador'
-            ];
-
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
+	}
 
 
 
+	public function getUser_get()
+	{
+		$id = $this->get('id');
 
-    }
+		if ($id===NULL)
+			$user= $this->user_model->getUsers();
+		else
+			$user= $this->user_model->getUsers($id);
 
-    function editUser_post()
-    {
-        $user = array(
-            'idUser' =>$this->post('idUser'),
-            'name' =>$this->post('name'),
-            'pass' =>$this->post('pass'),
-            'birthDate' =>$this->post('birth'),
-            'idProfile' =>$this->post('idProfile')
-        );
+		$this->response($user, REST_Controller::HTTP_OK);
+	}
 
-        if ($user['idUser']=='')
-        {
-            $message = [
-                'id' => -1,
-                'message' => 'É necessario o id do utilizador que deseja editar'
-            ];
+	public function getUserBooks_get()
+	{
+		$id = $this->get('id');
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
+		if ($id===NULL)
+			$user= $this->user_model->getUsersBooks();
+		else
+			$user= $this->user_model->getUsersBooks($id);
 
-        $ret=$this->user_model->editUser($user);
-        if ($ret<0)
-        {
-            $message = [
-                'id' => -2,
-                'message' => 'não foi passivel atualizar o utilizador na base de dados'
-            ];
+		$this->response($user, REST_Controller::HTTP_OK);
+	}
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
-        else
-        {
+	function addUser_post()
+	{
+		$user = array(
+			'name' =>$this->post('name'),
+			'email' =>$this->post('email'),
+			'pass' =>$this->post('pass'),
+			'birthDate' =>$this->post('birthDate'),
+			'idProfile' =>$this->post('idProfile'),
+		);
 
-            $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+		if ($this->post('myIdUser')==""){
 
-        }
+			$message = [
+				'id' => -4,
+				'message' => 'necessita de madnar o id do utilizador'
+			];
 
-    }
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
 
-    function addFriend_post()
-    {
-        $user = array(
-            'idUser' =>$this->post('idUser'),
-            'idFriend' =>$this->post('idFriend'),
-        );
+		}else if ($this->user_model->isAdmin($this->post('myIdUser'))){
 
-        if ($user['idUser'] == '' || $user['idFriend']== '')
-        {
-            $message = [
-                'id' => -1,
-                'message' => 'não foi passivel adicionar amigo'
-            ];
+			if ($user['name'] == '' || $user['email']== '' || $user['pass']=="")
+			{
+				$message = [
+					'id' => -1,
+					'message' => 'não foi passivel registar o utilizador na base de dados'
+				];
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
+				$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+				return;
+			}
+			$ret=$this->user_model->addUser($user);
+			if ($ret<0)
+			{
+				$message = [
+					'id' => -2,
+					'message' => 'não foi passivel registar o utilizador na base de dados'
+				];
 
-        $ret=$this->user_model->addFriend($user);
-        if ($ret<0)
-        {
-            $message = [
-                'id' => -2,
-                'message' => 'não foi passivel adicionar amigo'
-            ];
+				$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+				return;
+			}
+			else
+			{
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
-            return;
-        }
-        else
-        {
-            $message = [
-                'id' => 1,
-                'message' => 'Amigo adicionado',
-            ];
+				$message=$this->user_model->getUsers($ret);
 
-            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
-        }
+				$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
-    }
+			}
 
-    public function getFriends_get()
-    {
-        $id= $this->get('id');
+		}else{
+			$message = [
+				'id' => -3,
+				'message' => 'Utilizador não é administrador'
+			];
 
-        $users= $this->user_model->getFriend($id);
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
+		}
 
-        $this->response($users, REST_Controller::HTTP_OK);
-    }
 
-    public function getProfile_get()
-    {
 
-        $profile= $this->user_model->getProfile();
 
-        $this->response($profile, REST_Controller::HTTP_OK);
-    }
+	}
+
+	function editUser_post()
+	{
+		$user = array(
+			'idUser' =>$this->post('idUser'),
+			'name' =>$this->post('name'),
+			'pass' =>$this->post('pass'),
+			'birthDate' =>$this->post('birth'),
+			'idProfile' =>$this->post('idProfile')
+		);
+
+		if ($user['idUser']=='')
+		{
+			$message = [
+				'id' => -1,
+				'message' => 'É necessario o id do utilizador que deseja editar'
+			];
+
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
+		}
+
+		$ret=$this->user_model->editUser($user);
+		if ($ret<0)
+		{
+			$message = [
+				'id' => -2,
+				'message' => 'não foi passivel atualizar o utilizador na base de dados'
+			];
+
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
+		}
+		else
+		{
+
+			$this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+		}
+
+	}
+
+	function addFriend_post()
+	{
+		$user = array(
+			'idUser' =>$this->post('idUser'),
+			'idFriend' =>$this->post('idFriend'),
+		);
+
+		if ($user['idUser'] == '' || $user['idFriend']== '')
+		{
+			$message = [
+				'id' => -1,
+				'message' => 'não foi passivel adicionar amigo'
+			];
+
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
+		}
+
+		$ret=$this->user_model->addFriend($user);
+		if ($ret<0)
+		{
+			$message = [
+				'id' => -2,
+				'message' => 'não foi passivel adicionar amigo'
+			];
+
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+			return;
+		}
+		else
+		{
+			$message = [
+				'id' => 1,
+				'message' => 'Amigo adicionado',
+			];
+
+			$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+		}
+
+	}
+
+	public function getFriends_get()
+	{
+		$id= $this->get('id');
+
+		$users= $this->user_model->getFriend($id);
+
+		$this->response($users, REST_Controller::HTTP_OK);
+	}
+
+	public function getProfile_get()
+	{
+
+		$profile= $this->user_model->getProfile();
+
+		$this->response($profile, REST_Controller::HTTP_OK);
+	}
 
 }
+

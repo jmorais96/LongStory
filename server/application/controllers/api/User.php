@@ -63,6 +63,7 @@ class User extends REST_Controller {
 		$this->response($user, REST_Controller::HTTP_OK);
 	}
 
+
 	function addUser_post()
 	{
 		$user = array(

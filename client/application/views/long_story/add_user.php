@@ -1,10 +1,3 @@
-
-<div class="row">
-    <div class="col-lg-12">
-        <h2> New user's registration</h2>
-    </div>
-</div>
-
 <?php echo form_open_multipart("User/addUserValidation", 'role="form" class="form-horizontal"')?>
 
     <div class="row">
@@ -13,6 +6,7 @@
         </div>
     </div>
 
+<h2 style=color:grey;> New user's registration</h2>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="form-group row">

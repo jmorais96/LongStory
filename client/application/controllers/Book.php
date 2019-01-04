@@ -125,6 +125,35 @@ class Book extends CI_Controller
 				'idRegister' =>$this->input->post('idRegister')
 			);
 
+			if (isset($_FILES) && $_FILES['userfile']['error']==0){
+				$config['upload_path'] = 'upload/';
+				$config['allowed_types'] = '*';
+				$this->load->library('upload', $config);
+
+				if (! $this->upload->do_upload('userfile')){
+					$data= array(
+						'message' => $this->upload->display_errors()
+					);
+
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					echo $data['message'];
+					$this->load->view('general/footer');
+				}
+				else
+				{
+					$upload_data= $this->upload->data();
+					//print_r($upload_data); exit;
+					$post_data['userfile'] = base64_encode(
+						file_get_contents($upload_data['full_path'])
+					);
+				}
+			}
+			else
+			{
+				echo "deu erro a fazer upload";
+			}
+
 			//print_r($post_data); exit;
 			$this->addBook($post_data);
 		}

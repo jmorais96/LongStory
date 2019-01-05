@@ -169,7 +169,198 @@ class Book_model extends CI_Model
         foreach ($query->result() as $t)
             $book[] = (array) $t;
 
+
         return $book;
+    }
+
+    function bookExists($id){
+
+        $book = $this->getBookInfo($id);
+
+        if (count($book) > 0)
+            return true;
+
+        return false;
+
+    }
+
+    function setOwned($idUser, $idBook)
+    {
+
+        $own= array(
+            'idUser' => $idUser,
+            'idBook' => $idBook
+        );
+
+        $ret = $this->db->insert('owned', $own);
+
+
+        if (!$ret)
+            return -1;
+
+        return 1;
+    }
+
+    function getOwned($idBook)
+    {
+
+        $this->db->select("b.name");
+        $this->db->from("book as b");
+        $this->db->join("owned as o", "b.idBook = o.idBook");
+        $this->db->where('b.idBook', $idBook);
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        return $book;
+    }
+
+    public function isOwned($idUser, $idBook)
+    {
+
+        //print_r($idBook);exit;
+        //$where=array('o.idUser'=> $idUser, 'o.idBook'=>$idBook);
+
+        $this->db->select("o.idUser, o.idBook");
+        $this->db->from("owned as o");
+        $this->db->where('o.idUser', $idUser);
+        $this->db->where('o.idBook', $idBook);
+        $query=$this->db->get();
+        //print_r($query);exit;
+
+
+        $owned = array();
+        foreach ($query->result() as $t)
+            $owned[] = (array) $t;
+
+
+        if (!count($owned)==0)
+            return true;
+
+        return false;
+    }
+
+    function setRead($idUser, $idBook)
+    {
+
+        $read= array(
+            'idUser' => $idUser,
+            'idBook' => $idBook
+        );
+
+        $ret = $this->db->insert('read', $read);
+
+
+        if (!$ret)
+            return -1;
+
+        return 1;
+    }
+
+    function getRead($idBook)
+    {
+
+        $this->db->select("b.name");
+        $this->db->from("book as b");
+        $this->db->join("read as r", "b.idBook = r.idBook");
+        $this->db->where('b.idBook', $idBook);
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        return $book;
+    }
+
+
+    public function isRead($idUser, $idBook)
+    {
+        $this->db->select("r.idUser, r.idBook");
+        $this->db->from("read as r");
+        $this->db->where('r.idUser', $idUser);
+        $this->db->where('r.idBook', $idBook);
+        $query=$this->db->get();
+
+        $owned = array();
+        foreach ($query->result() as $t)
+            $owned[] = (array) $t;
+
+
+        if (count($owned)==0)
+            return true;
+
+        return false;
+    }
+
+    function setWishlist($idUser, $idBook)
+    {
+
+        $read= array(
+            'idUser' => $idUser,
+            'idBook' => $idBook
+        );
+
+        $ret = $this->db->insert('wishlist', $read);
+
+
+        if (!$ret)
+            return -1;
+
+        return 1;
+    }
+
+    function getWishlist($idBook)
+    {
+
+        $this->db->select("b.name");
+        $this->db->from("book as b");
+        $this->db->join("wishlist as w", "b.idBook = w.idBook");
+        $this->db->where('b.idBook', $idBook);
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        return $book;
+    }
+
+
+    public function isWishlist($idUser, $idBook)
+    {
+        $this->db->select("w.idUser, w.idBook");
+        $this->db->from("wishlist as w");
+        $this->db->where('w.idUser', $idUser);
+        $this->db->where('w.idBook', $idBook);
+        $query=$this->db->get();
+
+        $wishList = array();
+        foreach ($query->result() as $t)
+            $wishList[] = (array) $t;
+
+
+        if (count($wishList)==0)
+            return true;
+
+        return false;
+    }
+
+    function rateBook($book)
+    {
+        $ret = $this->db->insert('rating', $book);
+
+        $book_id = $this->db->insert_id();
+
+        if (!$ret)
+            return -1;
+
+        return $book_id;
     }
 
 }

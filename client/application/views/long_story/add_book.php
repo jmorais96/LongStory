@@ -46,7 +46,7 @@
 
 	<div class="col-lg-12">
 		<div class="form-group row">
-			<?php $name="userfile"; ?>
+			<?php $name="image"; ?>
 			<?php echo form_label('Image', $name, array('class' => 'col-lg-12 control-label'))?>
 			<div class="col-lg-12">
 				<?php echo form_upload($name, set_value($name), 'class="form-control" id = "'. $name .'" placeholder="Image')?>

@@ -77,7 +77,7 @@ class User extends CI_Controller {
 					);
 					$this->load->view('general/header_html');
 					$this->load->view('general/menu');
-					$this->load->view('long_story/add_user_fail', $data);
+					$this->load->view('long_story/add_fail', $data);
 					$this->load->view('general/footer');
 					return;
 			}
@@ -135,6 +135,76 @@ class User extends CI_Controller {
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/addUserForm
 	///////////////////////////////////// END CREATE USER ///////////////////////////////////
 
+	///////////////////////////////////// CREATE FRIEND ///////////////////////////////////
+	function addFriend($post_data)
+	{
+		//print_r($post_data); exit;
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url . '/addfriend/');
+		//echo $this->api_url . '/adduser/'; exit;
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($con, CURLOPT_POST, TRUE);
+		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 201:
+					break;
+				default: //echo "Unexpected HTTP code: ", $http_code, "\n";
+					//print_r($response);exit;
+					$data = array(
+						'message' => json_decode($response, true)
+					);
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					$this->load->view('long_story/add_fail', $data);
+					$this->load->view('general/footer');
+					return;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'friends' => json_decode($response, true)
+		);
+		//print_r($data); exit;
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/friends', $data);
+		$this->load->view('general/footer');
+	}
+
+	function addFriendForm()
+	{
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/add_friend');
+		$this->load->view('general/footer');
+	}
+
+	function addFriendValidation()
+	{
+		$this->form_validation->set_rules('idUser', 'IdUser', 'required');
+		$this->form_validation->set_rules('idFriend', 'IdFriend', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'idUser' => $this->input->post('idUser'),
+				'idFriend' => $this->input->post('idFriend'),
+			);
+
+			//print_r($post_data); exit;
+			$this->addFriend($post_data);
+		}
+		else
+		{
+			$this->addFriendForm();
+		}
+	}
+	///////////////////////////////////// END CREATE FRIEND ///////////////////////////////////
+
 	///////////////////////////////////// GET USER ///////////////////////////////////
 
 	function getUser($id = 0)
@@ -170,7 +240,7 @@ class User extends CI_Controller {
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
 	///////////////////////////////////// END GET USER ///////////////////////////////////
 
-	///////////////////////////////////// GET USER ///////////////////////////////////
+	///////////////////////////////////// GET USER BOOKS ///////////////////////////////////
 	function getUserBooks($id = 0)
 	{
 
@@ -204,7 +274,7 @@ class User extends CI_Controller {
 		$this->load->view('general/footer');
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUserBooks
-	///////////////////////////////////// END GET USER ///////////////////////////////////
+	///////////////////////////////////// END GET USER BOOKS ///////////////////////////////////
 
 	///////////////////////////////////// EDIT USER ///////////////////////////////////
 	function editUser($post_data)

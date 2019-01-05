@@ -22,8 +22,8 @@
 	</div>
 
 	<tr>
-		<td scope="col" >Name</td>
-		<td scope="col" >Email</td>
+		<td scope="col" >IdUser</td>
+		<td scope="col" >IdFriend</td>
 		<!--<td scope="col" >Edit</td>-->
 	</tr>
 	</thead>

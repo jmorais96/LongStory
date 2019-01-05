@@ -77,7 +77,7 @@ class Book extends CI_Controller
 					);
 					$this->load->view('general/header_html');
 					$this->load->view('general/menu');
-					$this->load->view('long_story/add_book_fail', $data);
+					$this->load->view('long_story/add_fail', $data);
 					$this->load->view('general/footer');
 					return;
 			}
@@ -125,12 +125,12 @@ class Book extends CI_Controller
 				'idRegister' =>$this->input->post('idRegister')
 			);
 
-			if (isset($_FILES) && $_FILES['userfile']['error']==0){
+			if (isset($_FILES) && $_FILES['image']['error']==0){
 				$config['upload_path'] = 'upload/';
 				$config['allowed_types'] = '*';
 				$this->load->library('upload', $config);
 
-				if (! $this->upload->do_upload('userfile')){
+				if (! $this->upload->do_upload('image')){
 					$data= array(
 						'message' => $this->upload->display_errors()
 					);
@@ -144,7 +144,7 @@ class Book extends CI_Controller
 				{
 					$upload_data= $this->upload->data();
 					//print_r($upload_data); exit;
-					$post_data['userfile'] = base64_encode(
+					$post_data['image'] = base64_encode(
 						file_get_contents($upload_data['full_path'])
 					);
 				}

@@ -322,7 +322,7 @@ class Book_model extends CI_Model
         $this->db->from("book as b");
         $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("wishlist as w", "b.idBook = w.idBook");
-        $this->db->where('o.idUser', $idUser);
+        $this->db->where('w.idUser', $idUser);
         $query=$this->db->get();
 
         $book = array();
@@ -405,14 +405,14 @@ class Book_model extends CI_Model
             $this->db->set('name', $book['name']);
         }
 
-        /*if ($user['pass']!='')
+        /*if ($book['author']!='')
         {
-            $this->db->set('pass', $user['pass']);
+            $this->db->set('idAuthor', $user['pass']);
         }
 
-        if ($user['birthDate']!='')
+        if ($user['description']!='')
         {
-            $this->db->set('birthDate', $user['birthDate']);
+            $this->db->set('description', $user['birthDate']);
         }
 
         if ($user['idProfile']!='')

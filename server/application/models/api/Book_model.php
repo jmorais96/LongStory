@@ -363,4 +363,36 @@ class Book_model extends CI_Model
         return $book_id;
     }
 
+    function searchBook($search)
+    {
+        $this->db->select("b.name, b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
+        $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
+        $this->db->join("rating as r", "r.idBook=b.idBook", "LEFT");
+        $this->db->join("book_has_gender as gb" , "gb.idBook=b.idBook", "LEFT");
+        $this->db->join("gender as g", "g.idGender=gb.idGender", "LEFT");
+
+        if (!$search['name']==""){
+            $this->db->where('b.name', $search['name']);
+        }
+
+        if (!$search['author']==""){
+            $this->db->where('a.author', $search['author']);
+        }
+
+        if (!$search['ISBN']==""){
+            $this->db->where('b.ISBN', $search['ISBN']);
+        }
+
+        $this->db->group_by('g.gender, b.name, a.author, b.description, b.ISBN, b.image');
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+
+        return $book;
+    }
+
 }

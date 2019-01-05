@@ -260,13 +260,14 @@ class Book_model extends CI_Model
         return 1;
     }
 
-    function getRead($idBook)
+    function getRead($idUser)
     {
 
-        $this->db->select("b.name");
+        $this->db->select("b.name, a.author, b.description");
         $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("read as r", "b.idBook = r.idBook");
-        $this->db->where('b.idBook', $idBook);
+        $this->db->where('r.idUser', $idUser);
         $query=$this->db->get();
 
         $book = array();
@@ -314,13 +315,14 @@ class Book_model extends CI_Model
         return 1;
     }
 
-    function getWishlist($idBook)
+    function getWishlist($idUser)
     {
 
-        $this->db->select("b.name");
+        $this->db->select("b.name, a.author, b.description");
         $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("wishlist as w", "b.idBook = w.idBook");
-        $this->db->where('b.idBook', $idBook);
+        $this->db->where('o.idUser', $idUser);
         $query=$this->db->get();
 
         $book = array();

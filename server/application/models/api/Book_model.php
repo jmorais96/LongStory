@@ -15,6 +15,7 @@ class Book_model extends CI_Model
         parent::__construct();
     }
 
+
     function getApprovedBooks()
     {
 
@@ -151,9 +152,24 @@ class Book_model extends CI_Model
         return $genders;
     }
 
-    function getBookInfo()
+    function getBookInfo($id)
     {
-        
+
+        $this->db->select("b.name, b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
+        $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
+        $this->db->join("rating as r", "r.idBook=b.idBook", "LEFT");
+        $this->db->join("book_has_gender as gb" , "gb.idBook=b.idBook", "LEFT");
+        $this->db->join("gender as g", "g.idGender=gb.idGender", "LEFT");
+        $this->db->where('b.idBook', $id );
+        $this->db->group_by('g.gender');
+        $query=$this->db->get();
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+        return $book;
     }
 
 }

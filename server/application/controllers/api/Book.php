@@ -131,7 +131,7 @@ class Book extends REST_Controller {
     public function getBookInfo_get($id)
     {
 
-        $book= $this->book_model->getBookInfo();
+        $book= $this->book_model->getBookInfo($id);
 
         $this->response($book, REST_Controller::HTTP_OK);
 

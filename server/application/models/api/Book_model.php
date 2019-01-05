@@ -407,17 +407,17 @@ class Book_model extends CI_Model
 
         /*if ($book['author']!='')
         {
-            $this->db->set('idAuthor', $user['pass']);
+            $this->db->set('idAuthor', $book['pass']);
         }
 
         if ($user['description']!='')
         {
-            $this->db->set('description', $user['birthDate']);
+            $this->db->set('description', $book['birthDate']);
         }
 
-        if ($user['idProfile']!='')
+        if ($book['idProfile']!='')
         {
-            $this->db->set('idProfile', $user['idProfile']);
+            $this->db->set('idProfile', $book['idProfile']);
         }*/
 
         //$this->db->where('idUser', $user['idUser']);

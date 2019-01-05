@@ -433,6 +433,17 @@ class Book extends REST_Controller {
             return;
         }
 
+        if (!$this->book_model->isRead($rating['idBook']))
+        {
+            $message = [
+                'id' => -5,
+                'message' => 'Não pode classificar um livro que não tenha lido ainda'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
 
         $ret=$this->book_model->rateBook($rating);
 

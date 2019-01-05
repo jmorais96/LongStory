@@ -235,8 +235,43 @@ class Book extends CI_Controller
 		$this->load->view('long_story/book/owned', $data);
 		$this->load->view('general/footer');
 	}
-	//http://localhost:8888/webServices/LongStory/client/index.php/Book/getBook
 	///////////////////////////////////// END GET OWNED ///////////////////////////////////
+
+	///////////////////////////////////// GET READ ///////////////////////////////////
+	function getRead($id = 0)
+	{
+
+		$con = curl_init();
+		if ($id == 0)
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getread/');
+		else
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getread/id/' . $id);
+
+
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 200:
+					break;
+				default:
+					echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'allRead' => json_decode($response, true)
+		);
+		//print_r($data);exit;
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/book/read', $data);
+		$this->load->view('general/footer');
+	}
+	///////////////////////////////////// END GET READ ///////////////////////////////////
 
 	///////////////////////////////////// VIEW BOOK ///////////////////////////////////
 	function getBookInfo($id = 0)

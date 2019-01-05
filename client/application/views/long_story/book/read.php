@@ -8,7 +8,7 @@
 //var_dump($movies);
 ?>
 
-<h1>List of owned books</h1>
+<h1>List of read books</h1>
 <table class="table table-bordered table-hover">
 	<thead>
 
@@ -34,11 +34,11 @@
 	<?php
 
 	//var_dump($users);
-	foreach ($allOwned as $oneOwned){ ?>
+	foreach ($allRead as $oneRead){ ?>
 		<tr>
-			<td><?php echo  $oneOwned['name'] ?></td>
-			<td><?php echo  $oneOwned['author'] ?></td>
-			<td><?php echo  $oneOwned['description'] ?></td>
+			<td><?php echo  $oneRead['name'] ?></td>
+			<td><?php echo  $oneRead['author'] ?></td>
+			<td><?php echo  $oneRead['description'] ?></td>
 			<!--<td class="col-lg-6" style="width: 100px; height: 100px;">
 				<?php //file_put_contents(FCPATH . 'upload/notFound.jpg', base64_decode($book['image'])); ?>
 				<img src="<?php //echo base_url('upload/notFound.jpg');?>" class="img-fluid">

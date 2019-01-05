@@ -26,8 +26,9 @@
 		<td scope="col" >Email</td>
 		<!--<td scope="col" >Pass</td>
 		<td scope="col" >Birth Date</td>-->
-		<td scope="col" >All Books</td>
-		<td scope="col" >Owned Books</td>
+		<td scope="col" >All</td>
+		<td scope="col" >Owned</td>
+		<td scope="col" >Read</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -40,8 +41,9 @@
 			<td><?php echo  $user['email'] ?></td>
 			<!--<td><?php //echo  $user['pass'] ?></td>
 			<td><?php //echo  $user['birthDate'] ?></td>-->
-			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">ALL BOOKS</a></td>
-			<td><a class="download-btn" href="<?php echo site_url("book/getOwned/".$user['idUser']); ?>">OWNED BOOKS</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">ALL</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getOwned/".$user['idUser']); ?>">OWNED</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getRead/".$user['idUser']); ?>">READ</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

@@ -204,8 +204,9 @@ class Book_model extends CI_Model
     function getOwned($idUser)
     {
 
-        $this->db->select("b.name");
+        $this->db->select("b.name, a.author, b.description");
         $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("owned as o", "b.idBook = o.idBook");
         $this->db->where('o.idUser', $idUser);
         $query=$this->db->get();

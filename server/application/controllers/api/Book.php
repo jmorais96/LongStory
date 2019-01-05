@@ -459,4 +459,31 @@ class Book extends REST_Controller {
 
     }
 
+    public function searchBook_get()
+    {
+        $search = array(
+            'name' =>$this->get('name'),
+            'author' =>$this->get('author'),
+            'ISBN' =>$this->get('ISBN'),
+        );
+
+
+        $ret=$this->book_model->searchBook($search);
+
+        if ($ret<0)
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'não foi possivel de pesquisar livros'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+
+        $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+    }
+
 }

@@ -214,8 +214,7 @@ class Book_model extends CI_Model
         foreach ($query->result() as $t)
             $book[] = (array) $t;
 
-
-        return $book;
+         return $book;
     }
 
     public function isOwned($idUser, $idBook)

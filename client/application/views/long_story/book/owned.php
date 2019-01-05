@@ -25,10 +25,10 @@
 	<tr>
 		<td scope="col" >Name</td>
 		<td scope="col" >Id Author</td>
-		<td scope="col" >Description</td>
+		<!--<td scope="col" >Description</td>
 		<td scope="col" >ISBN</td>
 		<!--<td scope="col" >image</td>-->
-		<td scope="col" >View Info</td>
+		<!--<td scope="col" >View Info</td>-->
 	</tr>
 	</thead>
 	<tbody>

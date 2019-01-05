@@ -209,7 +209,7 @@ class Book extends CI_Controller
 		if ($id == 0)
 			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getowned/');
 		else
-			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getowned/idUser/' . $id);
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getowned/id/' . $id);
 
 
 		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
@@ -229,6 +229,7 @@ class Book extends CI_Controller
 		$data = array(
 			'allOwned' => json_decode($response, true)
 		);
+		//print_r($data);exit;
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
 		$this->load->view('long_story/book/owned', $data);

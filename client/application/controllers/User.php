@@ -91,7 +91,7 @@ class User extends CI_Controller {
 		//print_r($data); exit;
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/users', $data);
+		$this->load->view('long_story/user/users', $data);
 		$this->load->view('general/footer');
 	}
 
@@ -99,7 +99,7 @@ class User extends CI_Controller {
 	{
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/add_user');
+		$this->load->view('long_story/user/add_user');
 		$this->load->view('general/footer');
 	}
 
@@ -171,7 +171,7 @@ class User extends CI_Controller {
 		//print_r($data); exit;
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/friends', $data);
+		$this->load->view('long_story/user/friends', $data);
 		$this->load->view('general/footer');
 	}
 
@@ -179,7 +179,7 @@ class User extends CI_Controller {
 	{
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/add_friend');
+		$this->load->view('long_story/user/add_friend');
 		$this->load->view('general/footer');
 	}
 
@@ -234,7 +234,7 @@ class User extends CI_Controller {
 		);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/users', $data);
+		$this->load->view('long_story/user/users', $data);
 		$this->load->view('general/footer');
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
@@ -270,7 +270,7 @@ class User extends CI_Controller {
 		//print_r($data);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/users_books', $data);
+		$this->load->view('long_story/book/users_books', $data);
 		$this->load->view('general/footer');
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUserBooks
@@ -304,7 +304,7 @@ class User extends CI_Controller {
 		//print_r($data);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/users', $data);
+		$this->load->view('long_story/user/users', $data);
 		$this->load->view('general/footer');
 	}
 
@@ -335,7 +335,7 @@ class User extends CI_Controller {
 
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/edit_user', $data);
+		$this->load->view('long_story/user/edit_user', $data);
 		$this->load->view('general/footer');
 	}
 
@@ -397,7 +397,7 @@ class User extends CI_Controller {
 		);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
-		$this->load->view('long_story/friends', $data);
+		$this->load->view('long_story/user/friends', $data);
 		$this->load->view('general/footer');
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser

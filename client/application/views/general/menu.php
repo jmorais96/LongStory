@@ -11,8 +11,8 @@
 				<!-- LOGO -->
 				<a class="footer-logo" href="<?php echo base_url();?>"><img src="<?php echo base_url('assets/images/logo.jpg');?>" alt="Logo"></a>
 				<a class="nav-item nav-link active" href="<?php echo site_url("user/"); ?>">Home <span class="sr-only">(current)</span></a>
-				<a class="nav-item nav-link" href="<?php echo site_url("user/getuser"); ?>">Users</a>
 				<a class="nav-item nav-link" href="<?php echo site_url("user/getuserbooks"); ?>">Books</a>
+				<a class="nav-item nav-link" href="<?php echo site_url("user/getuser"); ?>">Users</a>
 			<!--	<div class="dropdown">
 					<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Users

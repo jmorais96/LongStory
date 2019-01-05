@@ -17,7 +17,7 @@
 				<!-- End header content slider -->
 				<!-- Header btn area -->
 				<div class="header-btn-area">
-					<a class="knowmore-btn" href="<?php echo site_url("user/getuser"); ?>">KNOW MORE</a>
+					<a class="knowmore-btn" href="<?php echo site_url("user/getuserbooks"); ?>">KNOW MORE</a>
 				</div>
 			</div>
 		</div>

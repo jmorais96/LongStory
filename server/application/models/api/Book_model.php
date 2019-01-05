@@ -264,8 +264,9 @@ class Book_model extends CI_Model
     function getRead($idBook)
     {
 
-        $this->db->select("b.name");
+        $this->db->select("b.name, a.author, b.description");
         $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("read as r", "b.idBook = r.idBook");
         $this->db->where('b.idBook', $idBook);
         $query=$this->db->get();
@@ -318,8 +319,9 @@ class Book_model extends CI_Model
     function getWishlist($idBook)
     {
 
-        $this->db->select("b.name");
+        $this->db->select("b.name, a.author, b.description");
         $this->db->from("book as b");
+        $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("wishlist as w", "b.idBook = w.idBook");
         $this->db->where('b.idBook', $idBook);
         $query=$this->db->get();

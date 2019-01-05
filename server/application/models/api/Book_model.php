@@ -381,27 +381,29 @@ class Book_model extends CI_Model
         }
 
         if (!$search['ISBN'] == "") {
+
             $this->db->where('b.ISBN', $search['ISBN']);
         }
 
         $this->db->group_by('g.gender, b.name, a.author, b.description, b.ISBN, b.image');
-        $query = $this->db->get();
+
+        $query=$this->db->get();
 
         $book = array();
         foreach ($query->result() as $t)
-            $book[] = (array)$t;
-
+            $book[] = (array) $t;
 
         return $book;
     }
+
     
     function editBook($book){
         if ($book['name']!='')
         {
-            $this->db->set('name', $user['name']);
+            $this->db->set('name', $book['name']);
         }
 
-        if ($user['pass']!='')
+        /*if ($user['pass']!='')
         {
             $this->db->set('pass', $user['pass']);
         }
@@ -414,9 +416,9 @@ class Book_model extends CI_Model
         if ($user['idProfile']!='')
         {
             $this->db->set('idProfile', $user['idProfile']);
-        }
+        }*/
 
-        $this->db->where('idUser', $user['idUser']);
+        //$this->db->where('idUser', $user['idUser']);
 
 
         $ret = $this->db->update('user');
@@ -425,9 +427,7 @@ class Book_model extends CI_Model
             return -1;
 
 
-        return $this->getUsers($user['idUser']);
+        //return $this->getUsers($user['idUser']);
     }
-    
-    
 
 }

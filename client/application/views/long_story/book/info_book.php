@@ -1,11 +1,11 @@
-	<div class="col-sm-3">
+	<div class="col-sm-4">
 		<div class="col-sm" style="float: left;">
 			<?php file_put_contents(FCPATH . "upload/notFound.jpg" , base64_decode($image)); ?>
-			<img src="<?php echo base_url('upload/notFound.jpg'); ?>" class="img-fluid" style="height: 300px">
+			<img src="<?php echo base_url('upload/notFound.jpg'); ?>" class="img-fluid" style=" object-fit: cover; width: 300px; height: 410px;">
 		</div>
 
 	</div>
-	<div class="col-sm-9" style="float: right">
+	<div class="col-sm-8" style="float: right">
 		<table class="table">
 			<tr>
 				<th>Name</th>
@@ -33,4 +33,6 @@
 			</tr>
 
 		</table>
+
+
 	</div>

@@ -29,6 +29,7 @@
 		<td scope="col" >All</td>
 		<td scope="col" >Owned</td>
 		<td scope="col" >Read</td>
+		<td scope="col" >Wishlist</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -44,6 +45,7 @@
 			<td><a class="download-btn" href="<?php echo site_url("book/getBooks/".$user['idUser']); ?>">ALL</a></td>
 			<td><a class="download-btn" href="<?php echo site_url("book/getOwned/".$user['idUser']); ?>">OWNED</a></td>
 			<td><a class="download-btn" href="<?php echo site_url("book/getRead/".$user['idUser']); ?>">READ</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("book/getWishlist/".$user['idUser']); ?>">WISHLIST</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

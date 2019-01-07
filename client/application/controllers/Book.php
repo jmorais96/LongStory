@@ -273,6 +273,79 @@ class Book extends CI_Controller
 	}
 	///////////////////////////////////// END GET READ ///////////////////////////////////
 
+	///////////////////////////////////// SET READ  ///////////////////////////////////
+	function setRead($id = 0)
+	{
+		$con = curl_init();
+		if ($id == 0)
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/setread/');
+		else
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/setread/id/' . $id);
+
+
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($con);
+		//print_r($response);exit;
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 200:
+					break;
+				default:
+					echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'allRead' => json_decode($response, true)
+		);
+		//print_r($data);exit;
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/book/read', $data);
+		$this->load->view('general/footer');
+	}
+	///////////////////////////////////// SET READ ///////////////////////////////////
+
+	///////////////////////////////////// GET WHISLIST ///////////////////////////////////
+	function getWishlist($id = 0)
+	{
+
+		$con = curl_init();
+		if ($id == 0)
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getwishlist/');
+		else
+			curl_setopt($con, CURLOPT_URL, $this->api_url . '/getwishlist/id/' . $id);
+
+
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($con);
+		//print_r($response);exit;
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 200:
+					break;
+				default:
+					echo "Unexpected HTTP code: ", $http_code, "\n";
+					exit;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'wishlist' => json_decode($response, true)
+		);
+		//print_r($data);exit;
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/book/wishlist', $data);
+		$this->load->view('general/footer');
+	}
+	///////////////////////////////////// END GET WHISLIST ///////////////////////////////////
+
 	///////////////////////////////////// VIEW BOOK ///////////////////////////////////
 	function getBookInfo($id = 0)
 	{
@@ -295,6 +368,10 @@ class Book extends CI_Controller
 			}
 			else
 			{
+				if ($book[0]['rating']== "")
+				{
+					$book[0]['rating']=0;
+				}
 				$this->load->view('general/header_html');
 				$this->load->view('general/menu');
 				$this->load->view('long_story/book/info_book', $book[0]);
@@ -303,5 +380,101 @@ class Book extends CI_Controller
 
 	}
 	///////////////////////////////////// END VIEW BOOK ///////////////////////////////////
+
+	///////////////////////////////////// SEARCH BOOK ///////////////////////////////////
+	function searchBook()
+	{
+		$post_data = array(
+			'name' => $this->input->post('name'),
+			'author' => $this->input->post('author'),
+			'ISBN' => $this->input->post('ISBN')
+		);
+
+		//print_r($post_data);exit;
+		//echo "bla";exit;
+		$con = curl_init();
+		$url = $this->api_url.'/searchBook/name/'.$post_data['name']. '/author/' .$post_data['author']. '/ISBN/' .$post_data['ISBN'];
+		echo $url;exit;
+
+		curl_setopt($con, CURLOPT_URL, $url);
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($con);
+
+		// Check HTTP status code
+		$books = json_decode($response,TRUE);
+		curl_close($con);
+
+		if (empty($books))
+		{
+			echo "não foi encontrado o livro";
+		}
+		else
+		{
+			$this->load->view('general/header_html');
+			$this->load->view('general/menu');
+			$this->load->view('long_story/book/search', $books[0]);
+			$this->load->view('general/footer');
+		}
+
+	}
+	///////////////////////////////////// END SEARCH BOOK ///////////////////////////////////
+
+	///////////////////////////////////// ADD RATE ///////////////////////////////////
+	function rateBook($post_data)
+	{
+		//print_r($post_data); exit;
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url . '/ratebook/');
+		//echo $this->api_url . '/adduser/'; exit;
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($con, CURLOPT_POST, TRUE);
+		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 201:
+					break;
+				default: //echo "Unexpected HTTP code: ", $http_code, "\n";
+					//print_r($response);exit;
+					$data = array(
+						'message' => json_decode($response, true)
+					);
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					$this->load->view('long_story/add_fail', $data);
+					$this->load->view('general/footer');
+					return;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'ratings' => json_decode($response, true)
+		);
+		//print_r($data); exit;
+		$this->getBookInfo($post_data['idBook']);
+	}
+
+	function rateBookValidation()
+	{
+		$this->form_validation->set_rules('myIdUser', 'MyIdUser', 'required');
+		$this->form_validation->set_rules('idBook', 'IdBook', 'required');
+		$this->form_validation->set_rules('rating', 'Rating', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'myIdUser' => $this->input->post('myIdUser'),
+				'idBook' => $this->input->post('idBook'),
+				'rating' => $this->input->post('rating')
+			);
+
+			//print_r($post_data); exit;
+			$this->rateBook($post_data);
+		}
+
+	}
+	///////////////////////////////////// END ADD RATE ///////////////////////////////////
 
 }

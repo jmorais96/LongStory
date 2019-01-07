@@ -187,4 +187,30 @@ class User_model extends CI_Model
 		return $profiles;
 	}
 
+    function changeStatus($id)
+    {
+        $user=$this->getUsers($id) ;
+
+        if ($user['userStatus']==1){
+            $this->db->set('idStatusBook', 0);
+        }
+
+        if ($user['userStatus']==0){
+            $this->db->set('idStatusBook',1);
+        }
+
+
+
+
+        $this->db->where('idBook', $id);
+
+
+        $ret = $this->db->update('book');
+
+        if (!$ret)
+            return -1;
+
+
+        return $this->getBookInfo($id);
+    }
 }

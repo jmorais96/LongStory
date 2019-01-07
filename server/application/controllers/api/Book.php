@@ -372,7 +372,7 @@ class Book extends REST_Controller {
         {
             $message = [
                 'id' => 1,
-                'message' => 'Livro adicionado',
+                'message' => 'Livro adicionado à',
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_CREATED);

@@ -426,11 +426,6 @@ class Book_model extends CI_Model
             $this->db->set('name', $book['name']);
         }
 
-        if ($book['author']!='')
-        {
-            $this->db->set('idAuthor', $book['pass']);
-        }
-
         if ($book['description']!='')
         {
             $this->db->set('description', $book['description']);
@@ -452,12 +447,15 @@ class Book_model extends CI_Model
 
         $ret = $this->db->update('book');
 
-        $this->db->delete("book_has_gender", array('idBook'=> $book['idBook']));
+        if (isset($genders))
+        {
+            $this->db->delete("book_has_gender", array('idBook'=> $book['idBook']));
 
-        foreach ($genders as $key => $value){
+            foreach ($genders as $key => $value){
 
-            $book_gender=array('idBook'=>$book['idBook'], 'idGender'=>$value);
-            $this->db->insert('book_has_gender', $book_gender);
+                $book_gender=array('idBook'=>$book['idBook'], 'idGender'=>$value);
+                $this->db->insert('book_has_gender', $book_gender);
+            }
         }
 
         if (!$ret)

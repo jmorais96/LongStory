@@ -9,20 +9,8 @@
 			<div class="alert alert-success" style="height: 50px">
 				<strong>Success!</strong> <?php echo $message["message"]; ?>
 			</div>
+			<br>
+			&nbsp&nbsp
+			<p><a>Return to the owned books list </a><a href="<?php echo site_url("book/getowned/".$message["id"]); ?>" class="greenLink">here</a></p>
 		</div>
-
 	</div>
-<?php echo form_close()?>
-
-<?php
-/**
- * Created by PhpStorm.
- * User: carinagomes
- * Date: 06/01/2019
- * Time: 10:28
- */
-
-class add_success
-{
-
-}

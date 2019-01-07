@@ -304,6 +304,7 @@ class User extends CI_Controller {
 		//print_r($data);
 		$this->load->view('general/header_html');
 		$this->load->view('general/menu');
+		$this->load->view('long_story/message/add_success_edit_user');
 		$this->load->view('long_story/user/users', $data);
 		$this->load->view('general/footer');
 	}
@@ -401,5 +402,73 @@ class User extends CI_Controller {
 		$this->load->view('general/footer');
 	}
 	//http://localhost:8888/webServices/LongStory/client/index.php/User/getUser
-///////////////////////////////////// END GET FRIENDS ///////////////////////////////////
+	///////////////////////////////////// END GET FRIENDS ///////////////////////////////////
+
+	///////////////////////////////////// CHANGE STATUS ///////////////////////////////////
+	function changeUserStatus($post_data)
+	{
+		//print_r($post_data); exit;
+		$con = curl_init();
+		curl_setopt($con, CURLOPT_URL, $this->api_url . '/changeUserStatus/');
+		//echo $this->api_url . '/adduser/'; exit;
+		curl_setopt($con, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($con, CURLOPT_POST, TRUE);
+		curl_setopt($con, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		$response = curl_exec($con);
+		if (!curl_errno($con)) {
+			switch ($http_code = curl_getinfo($con, CURLINFO_HTTP_CODE)) {
+				case 201:
+					break;
+				default: //echo "Unexpected HTTP code: ", $http_code, "\n";
+					//print_r($response);exit;
+					$data = array(
+						'message' => json_decode($response, true)
+					);
+					$this->load->view('general/header_html');
+					$this->load->view('general/menu');
+					$this->load->view('long_story/message/add_fail', $data);
+					$this->load->view('general/footer');
+					return;
+			}
+		}
+
+		curl_close($con);
+
+		$data = array(
+			'friends' => json_decode($response, true)
+		);
+		//print_r($data); exit;
+		$this->getUser();
+	}
+
+	function changeUserStatusForm()
+	{
+		$this->load->view('general/header_html');
+		$this->load->view('general/menu');
+		$this->load->view('long_story/user/change_status');
+		$this->load->view('general/footer');
+	}
+
+	function changeUserStatusValidation()
+	{
+		$this->form_validation->set_rules('myIdUser', 'myIdUser', 'required');
+		$this->form_validation->set_rules('idUser', 'IdUser', 'required');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			$post_data = array(
+				'myIdUser' => $this->input->post('myIdUser'),
+				'idUser' => $this->input->post('idUser')
+			);
+
+			//print_r($post_data); exit;
+			$this->changeUserStatus($post_data);
+		}
+		else
+		{
+			$this->changeUserStatusForm();
+		}
+	}
+	///////////////////////////////////// END CHANGE STATUS ///////////////////////////////////
+
 }

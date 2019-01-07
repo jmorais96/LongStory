@@ -1,4 +1,3 @@
-
 <div class="row">
 	<div class="col-lg-12">
 		<h2> New user's registration</h2>
@@ -14,7 +13,7 @@
 	</div>
 </div>
 
-	<div class="row">
+<div class="row">
 	<div class="col-lg-12">
 		<div class="form-group row">
 			<?php echo form_label('MyIdUser', 'myIdUser', array('class' => 'col-lg-3 control-label'))?>
@@ -25,13 +24,13 @@
 	</div>
 
 	<?php $idUser = $user[0]['idUser']?>
-		<div class="col-lg-12">
-			<div class="form-group row">
-				<?php echo form_label('IdUser', 'idUser', array('class' => 'col-lg-3 control-label'))?>
-				<div class="col-lg-12">
-					<?php echo form_input('idUser', $idUser, "class='form-control'")?>
-				</div>
+	<div class="col-lg-12">
+		<div class="form-group row">
+			<?php echo form_label('IdUser', 'idUser', array('class' => 'col-lg-3 control-label'))?>
+			<div class="col-lg-12">
+				<?php echo form_input('idUser', $idUser, "class='form-control'")?>
 			</div>
+		</div>
 	</div>
 
 	<?php $idProfile = $user[0]['idProfile']?>
@@ -82,4 +81,3 @@
 	</div>
 </div>
 <?php echo form_close()?>
-

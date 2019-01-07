@@ -9,8 +9,9 @@
 ?>
 <span id="list_users">
 	<div style="display:flex;width: 100%; justify-content: space-between; align-items:center">
-		<div><h1>List of users</h1></div>
-		<div><a class="download-btn" href="<?php echo site_url("user/addUserForm"); ?>">CREATE USER</a></div>
+		<div class="col-md-7"><h1>List of users</h1></div>
+			<a style="height: 50px" class="download-btn" href="<?php echo site_url("user/addUserForm"); ?>">CREATE USER</a>
+			<a style="height: 50px"  class="download-btn" href="<?php echo site_url("user/changeUserStatusForm"); ?>">CHANGE STATUS</a>
 	</div>
 <table class="table table-bordered table-hover">
 	<thead>
@@ -26,8 +27,8 @@
 		<td scope="col" >Email</td>
 		<td scope="col" >Pass</td>
 		<td scope="col" >Birth Date</td>
-		<td scope="col" >Edit</td>
 		<td scope="col" >Friends</td>
+		<td scope="col" >Edit</td>
 	</tr>
 	</thead>
 	<tbody>
@@ -40,8 +41,8 @@
 			<td><?php echo  $user['email'] ?></td>
 			<td><?php echo  $user['pass'] ?></td>
 			<td><?php echo  $user['birthDate'] ?></td>
-			<td><a class="download-btn" href="<?php echo site_url("user/editUserForm/".$user['idUser']); ?>">EDIT</a></td>
 			<td><a class="download-btn" href="<?php echo site_url("user/getfriends/".$user['idUser']); ?>">FRIENDS</a></td>
+			<td><a class="download-btn" href="<?php echo site_url("user/editUserForm/".$user['idUser']); ?>">EDIT</a></td>
 		</tr>
 	<?php } ?>
 	</tbody>

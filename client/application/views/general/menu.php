@@ -20,7 +20,7 @@
 				<?php echo form_open_multipart("Book/searchBook", 'role="form" class="form-horizontal"')?>
 					<div class="row">
 						<div class="col-lg-2" style="padding: 2px;">
-									<?php echo form_input('name', set_value('name'), 'class="form-control" placeholder="Name"')?>
+									<?php echo form_input('name', set_value('name'), 'class="form-control" placeholder="Book Name"')?>
 						</div>
 						<div class="col-lg-2" style="padding: 2px;">
 									<?php echo form_input('author', set_value('author'), 'class="form-control"  placeholder="Author"')?>

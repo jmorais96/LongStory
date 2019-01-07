@@ -388,7 +388,7 @@ class Book_model extends CI_Model
 
     function searchBook($search)
     {
-        $this->db->select("b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
+        $this->db->select("b.idBook, b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
         $this->db->from("book as b");
         $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("rating as r", "r.idBook=b.idBook", "LEFT");

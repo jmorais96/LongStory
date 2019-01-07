@@ -54,16 +54,19 @@
 		</div>
 	</div>
 
+
 	<div class="col-lg-12">
-		<div class="form-group row">
-			<?php echo form_label('IdGender', 'idGender', array('class' => 'col-lg-3 control-label'))?>
-			<div class="col-lg-12">
-				<?php echo form_input('idGender', set_value('idGender'), 'class="form-control"')?>
-			</div>
-		</div>
+		<br>
+		<?php echo form_label('IdGender', 'idGender', array('class' => 'col-lg-3 control-label'))?>
+		<select class="col-lg-12 btn-green">
+				<option value="Poetry">Poetry</option>
+				<option value="Romance">Romance</option>
+				<option value="Horror">Horror</option>
+			</select>
 	</div>
 
 	<div class="col-lg-12">
+		<br>
 		<div class="form-group row">
 			<?php echo form_label('IdRegister', 'idRegister', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
@@ -83,3 +86,12 @@
 </div>
 <?php echo form_close()?>
 
+
+<!--<div class="col-lg-12">
+		<div class="form-group row">
+			<?php //echo form_label('IdGender', 'idGender', array('class' => 'col-lg-3 control-label'))?>
+			<div class="col-lg-12">
+				<?php //echo form_input('idGender', set_value('idGender'), 'class="form-control"')?>
+			</div>
+		</div>
+	</div>-->

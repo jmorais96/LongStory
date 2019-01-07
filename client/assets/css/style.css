@@ -3053,3 +3053,7 @@ img{
 	}
 }
 /* END SEARCH */
+
+.greenLink {
+	color : #3e8e41; text-decoration : none;
+}

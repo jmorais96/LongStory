@@ -433,6 +433,17 @@ class Book extends REST_Controller {
             return;
         }
 
+        if (!$this->book_model->isRead($rating['idBook']))
+        {
+            $message = [
+                'id' => -5,
+                'message' => 'Não pode classificar um livro que não tenha lido ainda'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
 
         $ret=$this->book_model->rateBook($rating);
 
@@ -485,5 +496,54 @@ class Book extends REST_Controller {
         $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
 
     }
+
+    function editBook_post()
+    {
+        $book = array(
+            'idBook' =>$this->post('idBook'),
+            'name' =>$this->post('name'),
+            'description' =>$this->post('description'),
+            'image' =>$this->post('image'),
+            'idStatusBook' =>$this->post('idStatusBook'),
+            'idAproved'=>$this->post('idAproved')
+        );
+        $genders=$this->post('genders');
+
+        if ($book['idBook']=='')
+        {
+            $message = [
+                'id' => -1,
+                'message' => 'É necessario o id do livro que deseja editar'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+        if (!$this->user_model->isAdmin($book['idAproved']))
+        {
+            $book['idAproved']="";
+        }
+
+        $ret=$this->book_model->editBook($book, $genders);
+        if ($ret<0)
+        {
+            $message = [
+                'id' => -2,
+                'message' => 'não foi passivel atualizar o livro na base de dados'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+        else
+        {
+
+            $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+        }
+
+    }
+
 
 }

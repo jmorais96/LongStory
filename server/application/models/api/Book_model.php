@@ -367,7 +367,7 @@ class Book_model extends CI_Model
 
     function searchBook($search)
     {
-        $this->db->select("b.name, b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
+        $this->db->select("b.name, a.author, b.description, b.ISBN, b.image, group_concat(distinct g.gender) as gender, ifnull(round(avg(r.rating),1),'') as rating");
         $this->db->from("book as b");
         $this->db->join("author as a", "b.idAuthor = a.idAuthor");
         $this->db->join("rating as r", "r.idBook=b.idBook", "LEFT");
@@ -399,37 +399,51 @@ class Book_model extends CI_Model
     }
 
     
-    function editBook($book){
+    function editBook($book, $genders){
         if ($book['name']!='')
         {
             $this->db->set('name', $book['name']);
         }
 
-        /*if ($book['author']!='')
+        if ($book['author']!='')
         {
-            $this->db->set('idAuthor', $user['pass']);
+            $this->db->set('idAuthor', $book['pass']);
         }
 
-        if ($user['description']!='')
+        if ($book['description']!='')
         {
-            $this->db->set('description', $user['birthDate']);
+            $this->db->set('description', $book['description']);
         }
 
-        if ($user['idProfile']!='')
+        if ($book['image']!='')
         {
-            $this->db->set('idProfile', $user['idProfile']);
-        }*/
+            $this->db->set('image', $book['image']);
+        }
 
-        //$this->db->where('idUser', $user['idUser']);
+        if ($book['idStatusBook']!='')
+        {
+            $this->db->set('idStatusBook', $book['idStatusBook']);
+            $this->db->set('idAproved', $book['idAproved']);
+        }
+
+        $this->db->where('idBook', $book['idBook']);
 
 
-        $ret = $this->db->update('user');
+        $ret = $this->db->update('book');
+
+        $this->db->delete("book_has_gender", array('idBook'=> $book['idBook']));
+
+        foreach ($genders as $key => $value){
+
+            $book_gender=array('idBook'=>$book['idBook'], 'idGender'=>$value);
+            $this->db->insert('book_has_gender', $book_gender);
+        }
 
         if (!$ret)
             return -1;
 
 
-        //return $this->getUsers($user['idUser']);
+        return $this->getBookInfo($book['idBook']);
     }
 
 }

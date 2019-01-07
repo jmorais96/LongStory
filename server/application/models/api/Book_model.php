@@ -198,7 +198,7 @@ class Book_model extends CI_Model
         if (!$ret)
             return -1;
 
-        return 1;
+        return $idUser;
     }
 
     function getOwned($idUser)
@@ -445,5 +445,7 @@ class Book_model extends CI_Model
 
         return $this->getBookInfo($book['idBook']);
     }
+
+
 
 }

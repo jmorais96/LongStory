@@ -233,5 +233,58 @@ class User extends REST_Controller {
 		$this->response($profile, REST_Controller::HTTP_OK);
 	}
 
+	public function changeUserStatus_post()
+    {
+        if ($this->post('myIdUser')==""){
+
+            $message = [
+                'id' => -4,
+                'message' => 'necessita de madnar o id do utilizador que pretende mudar o status'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+
+        }if ($this->user_model->isAdmin($this->post('myIdUser'))){
+
+            if ($this->post('idUser') == '')
+            {
+                $message = [
+                    'id' => -1,
+                    'message' => 'Tem te mandar o seu id de utilizador'
+                ];
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+                return;
+            }
+            $ret=$this->user_model->changeStatus($this->post('idUser'));
+            if ($ret<0)
+            {
+                $message = [
+                    'id' => -2,
+                    'message' => 'não foi possivel mudar o stado do utilizador'
+                ];
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+                return;
+            }
+            else
+            {
+
+                $this->set_response($ret, \Restserver\Libraries\REST_Controller::HTTP_CREATED);
+
+            }
+
+        }else{
+            $message = [
+                'id' => -3,
+                'message' => 'Utilizador não é administrador'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+    }
 }
 

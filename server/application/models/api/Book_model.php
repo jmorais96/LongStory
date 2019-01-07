@@ -257,7 +257,7 @@ class Book_model extends CI_Model
         if (!$ret)
             return -1;
 
-        return 1;
+        return $idUserf;
     }
 
     function getRead($idUser)
@@ -312,7 +312,7 @@ class Book_model extends CI_Model
         if (!$ret)
             return -1;
 
-        return 1;
+        return $idUser;
     }
 
     function getWishlist($idUser)

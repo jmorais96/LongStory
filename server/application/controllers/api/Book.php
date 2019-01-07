@@ -283,7 +283,7 @@ class Book extends REST_Controller {
         else
         {
             $message = [
-                'id' => 1,
+                'id' => $ret,
                 'message' => 'Livro adicionado',
             ];
 
@@ -371,7 +371,7 @@ class Book extends REST_Controller {
         else
         {
             $message = [
-                'id' => 1,
+                'id' => $ret,
                 'message' => 'Livro adicionado à',
             ];
 

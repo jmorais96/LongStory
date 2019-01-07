@@ -53,7 +53,7 @@ class User_model extends CI_Model
 
 	function getUsers($id=0)
 	{
-		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
+		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type, u.userStatus", false);
 		$this->db->from("user as u");
 		$this->db->join("profile as p" , "u.idProfile=p.idProfile");
         $this->db->where('u.userStatus', 1);
@@ -70,7 +70,9 @@ class User_model extends CI_Model
 
 		return $users;
 
+
 	}
+
 	function getUsersBooks($id=0)
 	{
 		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
@@ -189,28 +191,50 @@ class User_model extends CI_Model
 
     function changeStatus($id)
     {
-        $user=$this->getUsers($id) ;
-
-        if ($user['userStatus']==1){
-            $this->db->set('idStatusBook', 0);
+        $user=$this->getAllUsers($id) ;
+        //print_r($id);exit;
+        if ($user[0]['userStatus']==1){
+            $this->db->set('userStatus', 0);
         }
 
-        if ($user['userStatus']==0){
-            $this->db->set('idStatusBook',1);
+        if ($user[0]['userStatus']==0){
+            $this->db->set('userStatus',1);
         }
 
 
 
 
-        $this->db->where('idBook', $id);
+        $this->db->where('idUser', $id);
 
 
-        $ret = $this->db->update('book');
+        $ret = $this->db->update('user');
 
         if (!$ret)
             return -1;
 
 
-        return $this->getBookInfo($id);
+        return $this->getUsers($id);
+    }
+
+    function getAllUsers($id=0)
+    {
+        $this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type, u.userStatus", false);
+        $this->db->from("user as u");
+        $this->db->join("profile as p" , "u.idProfile=p.idProfile");
+
+
+        if ($id != 0)
+            $this->db->where('u.idUser', $id);
+
+        $query=$this->db->get();
+
+
+        $users = array();
+        foreach ($query->result() as $t)
+            $users[] = (array) $t;
+
+        return $users;
+
+
     }
 }

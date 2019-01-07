@@ -444,7 +444,7 @@ class Book_model extends CI_Model
         if ($book['idStatusBook']!='')
         {
             $this->db->set('idStatusBook', $book['idStatusBook']);
-            $this->db->set('idAproved', $book['idAproved']);
+            $this->db->set('idAprover', $book['idAprover']);
         }
 
         $this->db->where('idBook', $book['idBook']);

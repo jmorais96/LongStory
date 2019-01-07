@@ -550,7 +550,7 @@ class Book extends REST_Controller {
             'description' =>$this->post('description'),
             'image' =>$this->post('image'),
             'idStatusBook' =>$this->post('idStatusBook'),
-            'idAproved'=>$this->post('idAproved')
+            'idAprover'=>$this->post('idAprover')
         );
         $genders=$this->post('genders');
 
@@ -565,9 +565,9 @@ class Book extends REST_Controller {
             return;
         }
 
-        if (!$this->user_model->isAdmin($book['idAproved']))
+        if (!$this->user_model->isAdmin($book['idAprover']))
         {
-            $book['idAproved']="";
+            $book['idAprover']="";
         }
 
         $ret=$this->book_model->editBook($book, $genders);

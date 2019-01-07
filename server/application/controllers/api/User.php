@@ -72,6 +72,7 @@ class User extends REST_Controller {
 			'pass' =>$this->post('pass'),
 			'birthDate' =>$this->post('birthDate'),
 			'idProfile' =>$this->post('idProfile'),
+            'userStatus' => 1
 		);
 
 		if ($this->post('myIdUser')==""){

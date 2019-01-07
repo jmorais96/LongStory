@@ -36,6 +36,19 @@ class User_model extends CI_Model
         if ($user[0]['idProfile'] == 1)
             return true;
 
+        return false;
+
+    }
+
+    public function isActive($id)
+    {
+        $user = $this->getUsers($id);
+
+        if ($user[0]['userStatus'] == 1)
+            return true;
+
+        return false;
+
     }
 
 	function getUsers($id=0)
@@ -43,6 +56,7 @@ class User_model extends CI_Model
 		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
 		$this->db->from("user as u");
 		$this->db->join("profile as p" , "u.idProfile=p.idProfile");
+        $this->db->where('u.userStatus', 1);
 
 		if ($id != 0)
 			$this->db->where('u.idUser', $id);
@@ -62,6 +76,7 @@ class User_model extends CI_Model
 		$this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type", false);
 		$this->db->from("user as u");
 		$this->db->join("profile as p" , "u.idProfile=p.idProfile");
+        $this->db->where('u.userStatus', 1);
 
 		if ($id != 0)
 			$this->db->where('u.idUser', $id);
@@ -142,6 +157,7 @@ class User_model extends CI_Model
 		$this->db->join("friends as f" , "u.idUser = f.idUser");
 		$this->db->join("user as uf" , "f.idFriend = uf.idUser");
 		$this->db->where('f.idUser', $id);
+        $this->db->where('u.userStatus', 1);
 
 		//echo $this->db->get();
 

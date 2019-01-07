@@ -16,6 +16,27 @@ class Book_model extends CI_Model
     }
 
 
+    public function ISBNExists($ISBN)
+    {
+        $this->db->select("b.idBook, b.name, a.author, b.description, b.ISBN, b.image", false);
+        $this->db->from("book as b");
+        $this->db->join("author as a" , "b.idAuthor=a.idAuthor");
+        $this->db->where('b.ISBN', $ISBN);
+
+        $query=$this->db->get();
+
+
+        $book = array();
+        foreach ($query->result() as $t)
+            $book[] = (array) $t;
+
+        if (count($book)>0)
+            return true;
+
+        return false;
+
+    }
+
     function getApprovedBooks()
     {
 
@@ -257,7 +278,7 @@ class Book_model extends CI_Model
         if (!$ret)
             return -1;
 
-        return $idUserf;
+        return $idUser;
     }
 
     function getRead($idUser)

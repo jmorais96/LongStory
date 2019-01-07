@@ -95,6 +95,16 @@ class Book extends REST_Controller {
             return;
         }
 
+        if ($this->book_model->ISBNExists($this->post('ISBN'))){
+            $message = [
+                'id' => -5,
+                'message' => 'ISBN já existe'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
         $ret=$this->book_model->addBook($book, $genders);
 
         if ($ret<0)
@@ -179,6 +189,17 @@ class Book extends REST_Controller {
             return;
         }
 
+        if ($this->book_model->isOwned($idUser, $idBook))
+        {
+            $message = [
+                'id' => -4,
+                'message' => 'O utilizador não possui o livro'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
 
 
         $ret=$this->book_model->setOwned($idUser, $idBook);
@@ -255,10 +276,21 @@ class Book extends REST_Controller {
             return;
         }
 
-        if (!$this->book_model->isOwned($idUser, $idBook))
+        if ($this->book_model->isOwned($idUser, $idBook))
         {
             $message = [
                 'id' => -4,
+                'message' => 'O utilizador não possui o livro'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+        if (!$this->book_model->isread($idUser, $idBook))
+        {
+            $message = [
+                'id' => -5,
                 'message' => 'O utilizador não possui o livro'
             ];
 
@@ -322,6 +354,8 @@ class Book extends REST_Controller {
         }
 
 
+
+
         if (!$this->book_model->bookExists($idBook))
         {
             $message = [
@@ -338,6 +372,17 @@ class Book extends REST_Controller {
             $message = [
                 'id' => -3,
                 'message' => 'O utilizador não existe'
+            ];
+
+            $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+            return;
+        }
+
+        if ($this->book_model->isWishlist($idUser, $idBook))
+        {
+            $message = [
+                'id' => -5,
+                'message' => 'Este livro já está nesta wishlist'
             ];
 
             $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);

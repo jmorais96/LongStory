@@ -97,6 +97,17 @@ class User extends REST_Controller {
 				$this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
 				return;
 			}
+
+			if ($this->user_model->mailExists($this->post('email'))){
+                $message = [
+                    'id' => -5,
+                    'message' => 'Email já existe'
+                ];
+
+                $this->set_response($message, \Restserver\Libraries\REST_Controller::HTTP_NOT_FOUND);
+                return;
+            }
+
 			$ret=$this->user_model->addUser($user);
 			if ($ret<0)
 			{

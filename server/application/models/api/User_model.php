@@ -29,6 +29,27 @@ class User_model extends CI_Model
 
     }
 
+    public function mailExists($mail)
+    {
+        $this->db->select("u.idUser, u.name, u.email, u.pass, u.birthDate, u.idProfile, p.type, u.userStatus", false);
+        $this->db->from("user as u");
+        $this->db->join("profile as p" , "u.idProfile=p.idProfile");
+        $this->db->where('u.email', $mail);
+
+        $query=$this->db->get();
+
+
+        $users = array();
+        foreach ($query->result() as $t)
+            $users[] = (array) $t;
+
+        if (count($users)>0)
+            return true;
+
+        return false;
+
+    }
+
     public function isAdmin($id)
     {
         $user = $this->getUsers($id);

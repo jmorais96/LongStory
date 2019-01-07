@@ -39,10 +39,10 @@
 			<td><?php echo  $oneOwned['name'] ?></td>
 			<td><?php echo  $oneOwned['author'] ?></td>
 			<td><?php echo  $oneOwned['description'] ?></td>
-			<!--<td class="col-lg-6" style="width: 100px; height: 100px;">
+			<td class="col-lg-6" style="width: 100px; height: 100px;">
 				<?php //file_put_contents(FCPATH . 'upload/notFound.jpg', base64_decode($book['image'])); ?>
 				<img src="<?php //echo base_url('upload/notFound.jpg');?>" class="img-fluid">
-			</td>-->
+			</td>
 		</tr>
 	<?php } ?>
 	</tbody>

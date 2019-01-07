@@ -8,7 +8,7 @@
 //var_dump($movies);
 ?>
 
-<h1>List of read books</h1>
+<h1>Wishlist books</h1>
 <table class="table table-bordered table-hover">
 	<thead>
 
@@ -34,11 +34,11 @@
 	<?php
 
 	//var_dump($users);
-	foreach ($allRead as $oneRead){ ?>
+	foreach ($wishlist as $oneWishlist){ ?>
 		<tr>
-			<td><?php echo  $oneRead['name'] ?></td>
-			<td><?php echo  $oneRead['author'] ?></td>
-			<td><?php echo  $oneRead['description'] ?></td>
+			<td><?php echo  $oneWishlist['name'] ?></td>
+			<td><?php echo  $oneWishlist['author'] ?></td>
+			<td><?php echo  $oneWishlist['description'] ?></td>
 			<!--<td class="col-lg-6" style="width: 100px; height: 100px;">
 				<?php //file_put_contents(FCPATH . 'upload/notFound.jpg', base64_decode($book['image'])); ?>
 				<img src="<?php //echo base_url('upload/notFound.jpg');?>" class="img-fluid">
@@ -47,24 +47,3 @@
 	<?php } ?>
 	</tbody>
 </table>
-
-<!-- SET READ -->
-<h3>Add your book to this list</h3>
-<div class="col-lg-6">
-	<?php echo form_open_multipart("Book/setRead", 'role="form" class="form-horizontal"')?>
-	<div class="row">
-		<div class="col-lg-3" style="padding: 2px;">
-			<?php echo form_input('myIdUser', set_value('myIdUser'), 'class="form-control" placeholder="MyIdUser"')?>
-		</div>
-		<div class="col-lg-3" style="padding: 2px;">
-			<?php echo form_input('idBook', set_value('idBook'), 'class="form-control"  placeholder="IdBook"')?>
-		</div>
-		<div class="col-lg-2"style="padding: 2px;">
-			<p class="text-center">
-				<button type="submit" class="btn btn-green" style="width: 100%">ADD</button>
-			</p>
-		</div>
-	</div>
-	<?php echo form_close()?>
-</div>
-<!-- END SET READ -->

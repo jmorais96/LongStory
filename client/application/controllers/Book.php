@@ -110,7 +110,7 @@ class Book extends CI_Controller
 		$this->form_validation->set_rules('description', 'Description', 'required');
 		$this->form_validation->set_rules('ISBN', 'ISBN', 'required');
 	//	$this->form_validation->set_rules('image', 'Image', 'required');
-		$this->form_validation->set_rules('idGender', 'IdGender', 'required');
+		$this->form_validation->set_rules('idGender', 'IdGender', '');
 		$this->form_validation->set_rules('idRegister', 'IdRegister', 'required');
 
 		if ($this->form_validation->run() === TRUE)
@@ -124,6 +124,8 @@ class Book extends CI_Controller
 				'idGender' =>$this->input->post('idGender'),
 				'idRegister' =>$this->input->post('idRegister')
 			);
+
+			//print_r($post_data);exit;
 
 			if (isset($_FILES) && $_FILES['image']['error']==0){
 				$config['upload_path'] = 'upload/';

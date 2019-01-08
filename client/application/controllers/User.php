@@ -107,9 +107,9 @@ class User extends CI_Controller {
 	{
 		$this->form_validation->set_rules('myIdUser', 'MyIdUser', 'required');
 		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('pass', 'Pass', 'required');
-		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
+		$this->form_validation->set_rules('birthDate', 'BirthDate', '');
 		$this->form_validation->set_rules('idProfile', 'IdProfile', 'required');
 
 
@@ -342,12 +342,12 @@ class User extends CI_Controller {
 
 	function editUserValidation()
 	{
-		$this->form_validation->set_rules('myIdUser', 'IdUser', 'required');
-		$this->form_validation->set_rules('idUser', 'IdUser', 'required');
-		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('pass', 'Pass', 'required');
-		$this->form_validation->set_rules('birthDate', 'BirthDate', 'required');
-		$this->form_validation->set_rules('idProfile', 'IdProfile', 'required');
+		$this->form_validation->set_rules('myIdUser', 'IdUser', '');
+		$this->form_validation->set_rules('idUser', 'IdUser', '');
+		$this->form_validation->set_rules('name', 'Name', '');
+		$this->form_validation->set_rules('pass', 'Pass', '');
+		$this->form_validation->set_rules('birthDate', 'BirthDate', '');
+		$this->form_validation->set_rules('idProfile', 'IdProfile', '');
 
 		if ($this->form_validation->run() === TRUE)
 		{

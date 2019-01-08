@@ -34,17 +34,17 @@
 	</div>
 
 	<?php $idProfile = $user[0]['idProfile']?>
-	<div class="col-lg-12">
-		<div class="form-group row">
-			<?php echo form_label('IdProfile', 'idProfile', array('class' => 'col-lg-3 control-label'))?>
-			<div class="col-lg-12">
-				<?php echo form_input('idProfile', $idProfile, "class='form-control' placeholder= $idProfile")?>
-			</div>
-		</div>
+	<div class="col-lg-4" style="margin-left: 15px;">
+		<?php echo form_label('IdProfile', 'idProfile', array('class' => 'col-lg-3 control-label'))?>
+		<select name="idProfile"class="col-lg-12 btn-green">
+			<option value="1">Administrator</option>
+			<option value="2">Client</option>
+		</select>
 	</div>
 
 	<?php $name = $user[0]['name']?>
 	<div class="col-lg-12">
+		<br>
 		<div class="form-group row">
 			<?php echo form_label('Name', 'name', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">

@@ -15,18 +15,18 @@
     <br /><br />
 
     <div id="container">
-        <div class="row">
+        <div class="row col-lg-12">
             <div class="col-lg-12">
                 <h1>Welcome to Long story!</h1>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row col-lg-12">
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <h4 class="card-title">Add User</h4>
-                        <table class="table table-bordered">
+                        <table class="table">
                             <tr>
                                 <th>Methods</th>
                                 <td>POST</td>
@@ -55,10 +55,10 @@
             </div>
 
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <h4 class="card-title">Get User</h4>
-                        <table class="table table-bordered">
+                        <table class="table ">
                             <tr>
                                 <th>Methods</th>
                                 <td>Get</td>
@@ -83,12 +83,12 @@
             </div>
 
         <br />
-        <div class="row">
+        <div class="row col-lg-12">
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <h4 class="card-title">Edit User</h4>
-                        <table class="table table-bordered">
+                        <table class="table ">
                             <tr>
                                 <th>Methods</th>
                                 <td>POST</td>
@@ -117,10 +117,10 @@
             </div>
 
             <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
+                <div class="">
+                    <div class="">
                         <h4 class="card-title">Add Friend</h4>
-                        <table class="table table-bordered">
+                        <table class="table ">
                             <tr>
                                 <th>Methods</th>
                                 <td>POST</td>
@@ -147,12 +147,12 @@
 
         </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Friends</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -177,10 +177,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Get Profile</h4>
-                            <table class="table table-bordered">
+                    <div class="">
+                        <div class="">
+                            <h4 class="card-row">Get Profile</h4>
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>get</td>
@@ -200,12 +200,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row  col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Change User Status</h4>
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>POST</td>
@@ -230,10 +230,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Profile</h4>
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>get</td>
@@ -253,12 +253,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">get Books</h4>
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -283,10 +283,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Add Book</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>POST</td>
@@ -318,12 +318,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">get Genders</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -347,10 +347,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Book Info</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -376,12 +376,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Set Owned</h4>
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>SET</td>
@@ -407,10 +407,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Owned</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -436,12 +436,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Set Read</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>SET</td>
@@ -467,10 +467,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Read</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -496,12 +496,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Set Wishlist</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>SET</td>
@@ -527,10 +527,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Get Wishlist</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>GET</td>
@@ -556,12 +556,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Rate Book</h4>
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <tr>
                                     <th>Methods</th>
                                     <td>POST</td>
@@ -588,10 +588,10 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">SearchBook</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>POST</td>
@@ -619,12 +619,12 @@
 
             </div>
 
-            <div class="row">
+            <div class="row col-lg-12">
                 <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
+                    <div class="">
+                        <div class="">
                             <h4 class="card-title">Rate Book</h4>
-                            <table class="table table-bordered">
+                            <table class="table ">
                                 <tr>
                                     <th>Methods</th>
                                     <td>POST</td>

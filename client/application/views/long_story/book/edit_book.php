@@ -3,7 +3,7 @@
 		<h2> Edit book's registration</h2>
 	</div>
 </div>
-<?php print_r($book);?>
+<?php //print_r($book);?>
 
 <?php echo form_open_multipart("Book/editBookValidation", 'role="form" class="form-horizontal"')?>
 
@@ -54,18 +54,20 @@
 		</div>
 	</div>
 
-	<?php $idStatusBook = $book[0]['idStatusBook']; $description =str_replace('%20', ' ', $description);?>
-	<div class="col-lg-12">
-		<div class="form-group row">
-			<?php echo form_label('IdStatusBook', 'idStatusBook', array('class' => 'col-lg-3 control-label'))?>
-			<div class="col-lg-12">
-				<?php echo form_input('idStatusBook', $idStatusBook, "class='form-control' placeholder= $idStatusBook")?>
-			</div>
-		</div>
+	<?php $idStatusBook = $book[0]['idStatusBook'];?>
+	<div class="col-lg-4" style="margin-left: 15px;">
+		<br>
+		<?php echo form_label('IdStatusBook', 'idStatusBook', array('class' => 'col-lg-3 control-label'))?>
+		<select name="idStatusBook"class="col-lg-12 btn-green">
+			<option value="1">Approved</option>
+			<option value="2">Reproved</option>
+			<option value="3">Pending</option>
+		</select>
 	</div>
 
 	<?php $idAprover= $book[0]['idAprover']?>
 	<div class="col-lg-12">
+		<br>
 		<div class="form-group row">
 			<?php echo form_label('IdAprover', 'idAprover', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">

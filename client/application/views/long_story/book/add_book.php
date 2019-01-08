@@ -44,24 +44,13 @@
 		</div>
 	</div>
 
-	<div class="col-lg-12">
-		<div class="form-group row">
-			<?php $name="image"; ?>
-			<?php echo form_label('Image', $name, array('class' => 'col-lg-12 control-label'))?>
-			<div class="col-lg-12">
-				<?php echo form_upload($name, set_value($name), 'class="form-control" id = "'. $name .'" placeholder="Image')?>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="col-lg-12">
+	<div class="col-lg-4" style="margin-left: 15px;">
 		<br>
 		<?php echo form_label('IdGender', 'idGender', array('class' => 'col-lg-3 control-label'))?>
-		<select class="col-lg-12 btn-green">
-				<option value="Poetry">Poetry</option>
-				<option value="Romance">Romance</option>
-				<option value="Horror">Horror</option>
+			<select name="idGender"class="col-lg-12 btn-green">
+				<option value="1">Poetry</option>
+				<option value="2">Romance</option>
+				<option value="3">Horror</option>
 			</select>
 	</div>
 
@@ -71,6 +60,16 @@
 			<?php echo form_label('IdRegister', 'idRegister', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
 				<?php echo form_input('idRegister', set_value('idRegister'), 'class="form-control"')?>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+		<div class="form-group row">
+			<?php $name="image"; ?>
+			<?php echo form_label('Image', $name, array('class' => 'col-lg-12 control-label'))?>
+			<div class="col-lg-12">
+				<?php echo form_upload($name, set_value($name), 'class="form-control" id = "'. $name .'" placeholder="Image')?>
 			</div>
 		</div>
 	</div>

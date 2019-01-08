@@ -1,7 +1,7 @@
 	<div class="col-sm-4">
 		<div class="col-sm" style="float: left;">
 			<?php file_put_contents(FCPATH . "upload/notFound.jpg" , base64_decode($image)); ?>
-			<img src="<?php echo base_url('upload/notFound.jpg'); ?>" class="img-fluid" style=" object-fit: cover; width: 300px; height: 410px;">
+			<img src="<?php echo base_url('upload/notFound.jpg'); ?>" class="img-fluid" style=" object-fit: cover; width: 330px; height: 530px;">
 		</div>
 
 	</div>
@@ -25,6 +25,24 @@
 			<tr>
 				<th>ISBN</th>
 				<td><?php echo $ISBN;?></td>
+			</tr>
+
+			<tr>
+				<th>Gender</th>
+				<td><?php echo $gender; ?></td>
+			</tr>
+
+			<tr>
+				<th>State</th>
+				<td><?php
+					if($idStatusBook == 1){
+						echo "Approved";
+					} else if ($idStatusBook == 2) {
+						echo "Reproved";
+					} else {
+						echo "Pending";
+					}
+					?></td>
 			</tr>
 
 			<tr>
@@ -78,5 +96,11 @@
 			</div>
 		</div>
 		<?php echo form_close()?>
+		<div class="col-lg-12">
+			<p class="text-center">
+				<a class="col-lg-12 btn btn-green" href="<?php echo site_url("book/editbookform/".$idBook); ?>">Edit book</a>
+			</p>
+			<br>
+		</div>
 		<!-- END ADD RATING FORM -->
 	</div>

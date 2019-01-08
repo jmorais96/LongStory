@@ -23,16 +23,16 @@
 		</div>
 	</div>
 
-	<div class="col-lg-12">
-		<div class="form-group row">
-			<?php echo form_label('IdProfile', 'idProfile', array('class' => 'col-lg-3 control-label'))?>
-			<div class="col-lg-12">
-				<?php echo form_input('idProfile', set_value('idProfile'), 'class="form-control"')?>
-			</div>
-		</div>
+	<div class="col-lg-4" style="margin-left: 15px;">
+		<?php echo form_label('IdProfile', 'idProfile', array('class' => 'col-lg-3 control-label'))?>
+		<select name="idProfile"class="col-lg-12 btn-green">
+			<option value="1">Administrator</option>
+			<option value="2">Client</option>
+		</select>
 	</div>
 
 	<div class="col-lg-12">
+		<br>
 		<div class="form-group row">
 			<?php echo form_label('Name', 'name', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
@@ -62,7 +62,7 @@
 		<div class="form-group row">
 			<?php echo form_label('BirthDate', 'birthDate', array('class' => 'col-lg-3 control-label'))?>
 			<div class="col-lg-12">
-				<?php echo form_input('birthDate', set_value('birthDate'), 'class="form-control"')?>
+				<?php echo form_input('birthDate', set_value('birthDate'), 'class="form-control" placeholder="ex: YYYY-MM-DD"')?>
 			</div>
 		</div>
 	</div>
